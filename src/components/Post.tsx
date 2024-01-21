@@ -6,6 +6,7 @@ const Post = ({ data }) => {
       <h3 className="font-bold text-xl mb-2">{data.content.title}</h3>
       <p className="text-gray-700 text-base">{data.content.subject}</p>
       <p className="text-gray-700 text-base">{data.content.message}</p>
+      <p className="text-gray-700 text-base">{data.comments.message}</p>
     </div>
   );
 };

@@ -1,11 +1,19 @@
 import React from 'react';
 import Feed from '../components/Feed.tsx';
+import NewsFeed from '../components/NewsFeed.tsx';
 
 const HomePage: React.FC = () => {
   return (
-    <div className="p-4">
-      <Feed />
+    <div className="container mx-auto p-4">
+    <div className="grid md:grid-cols-3 gap-4">
+      <div className="md:col-span-2">
+        <Feed />
+      </div>
+      <div className="md:col-span-1">
+        <NewsFeed />
+      </div>
     </div>
+  </div>
   );
 };
 

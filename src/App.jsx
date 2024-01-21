@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage.tsx';
@@ -11,14 +11,24 @@ import SignUpForm from './components/SignupForm.tsx';
 
 function App() {
   const { isModalOpen, openModal, closeModal } = useModal();
-  console.log(process.env.REACT_APP_API_BEARER_TOKEN, process.env.REACT_APP_API_URL)
+  const [modalContent, setModalContent] = useState('login');
+
+  const handleLoginClick = () => {
+    setModalContent('login');
+    openModal();
+  };
+
+  const handleSignUpClick = () => {
+    setModalContent('signup');
+    openModal();
+  };
 
   return (
     <Router>
       <div className="App">
-        <Header onLoginClick={openModal} />
+        <Header onLoginClick={handleLoginClick} onSignUpClick={handleSignUpClick} />
         <Modal isOpen={isModalOpen} onClose={closeModal}>
-          <LoginForm />
+          {modalContent === 'login' ? <LoginForm /> : <SignUpForm />}
         </Modal>
         <Routes>
           <Route path="/" element={<HomePage />} />
