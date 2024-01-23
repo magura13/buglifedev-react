@@ -2,35 +2,33 @@ import { useState, useEffect } from 'react';
 import { getPosts } from '../services/posts.ts';
 import { PostData } from '../types/PostData.ts';
 
-const usePosts = () => {
-  const [allPosts, setAllPosts] = useState<PostData[]>([]);
+const usePosts = (offset,limit) => {
   const [posts, setPosts] = useState<PostData[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 4;
+  const [hasMore,setHasMore] = useState(true)
+
   useEffect(() => {
     const loadAllPosts = async () => {
       try {
-        const fetchedPosts = await getPosts();
-        setAllPosts(fetchedPosts);
-        setPosts(fetchedPosts.slice(0, postsPerPage));
+        const fetchedPosts = await getPosts(offset,limit);
+        setPosts(fetchedPosts.data);
+        setHasMore(fetchedPosts.hasMore);
       } catch (error) {
         console.error('Erro ao buscar posts:', error);
       }
     };
-
     loadAllPosts();
   }, []);
-
-  const loadMore = () => {
-    const nextPage = currentPage + 1;
-    const nextPosts = allPosts.slice(0, nextPage * postsPerPage);
-    setPosts(nextPosts);
-    setCurrentPage(nextPage);
+  const loadMore = async (newOffset, newLimit) => {
+    try {
+      const fetchedPosts = await getPosts(newOffset, newLimit);
+      setPosts([...posts, ...fetchedPosts.data]);
+      setHasMore(fetchedPosts.hasMore);
+    } catch (error) {
+      console.error('Erro ao buscar mais posts:', error);
+    }
   };
 
-  const hasMore = posts.length < allPosts.length;
-
-  return { posts, hasMore, loadMore };
+  return { posts, hasMore,loadMore};
 };
 
 export default usePosts;

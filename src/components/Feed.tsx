@@ -1,24 +1,19 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Post from './Post.tsx';
 import usePosts from '../hooks/usePosts.tsx';
 
 const Feed = () => {
-  const { posts, hasMore, loadMore } = usePosts();
+  const [offset, setOffset] = useState(0);
+  const limit = 4;
+  const { posts, hasMore, loadMore } = usePosts(offset,limit);
+  console.log(posts,hasMore)
 
-  const handleScroll = useCallback(() => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop >=
-        (document.documentElement.offsetHeight * 4) / 5 &&
-      hasMore
-    ) {
-      loadMore();
-    }
-  }, [hasMore, loadMore]);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
+  const loadMorePosts = () => {
+    const newOffset = offset + limit;
+    setOffset(newOffset);
+    loadMore(offset, limit);
+    
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -29,7 +24,7 @@ const Feed = () => {
           Não há postagens para mostrar.
         </p>
       )}
-      {hasMore && <div className="text-center">Carregando mais posts...</div>}
+      {hasMore && <button onClick={loadMorePosts} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Load More</button>}
     </div>
   );
 };
