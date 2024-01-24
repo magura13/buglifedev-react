@@ -14,7 +14,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
         <div className="relative">
           <input
             type="search"
-            className="w-2/4 px-4 py-2 rounded-lg text-gray-700 focus:outline-none"
+            className="w-2/4 px-4 py-2 rounded-lg text-gray-700 focus:outline-none placeholder-white"
             placeholder="Campo de busca"
             disabled
           />
