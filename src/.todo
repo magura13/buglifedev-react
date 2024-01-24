@@ -1,9 +1,24 @@
+
+----24/01/2024
+Titico, feiz mais umas estilizações no post em si:
+Adicionei as horas em que foi criado (jká esta sendo dinamico)
+Adicionei o "criado ´por" - ainda não está dinamico, vou aplicar no banco assim como mandei o áudio
+Adicionei algumas cores pra ficar mais bonitinho mesmo, podemos mudar depois.
+Adiocnei estilos customizados no tailwind.css
+Criei ums posts longos pra ver como ficou, to gostando do formato
+
+
+Aogra oq falta seria ter o botão de comentário, pra ele ser adicionado, além também da renderização dos comentários de cada post
+
+
+
+
+
+
+
+----23/01/2024
 titico, ficar de olho na chamada dos links dotenv, n sei pq mas n funcionou comigo..
 no service file, eu coloquei hard coded tanto o link quanto o acces token
 fiquei co preguiça ontem de ver o pq q tava dando ruim, mas dps vou ver com calma
-
-
-
 implementei o load more posts, da uma olhada..
-
 N sei pq q tem q ter uma função diferente chamada "laodmore" ao inves de chamar a mesma, mas enfim, deu bom.
