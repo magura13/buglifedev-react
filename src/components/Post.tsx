@@ -1,5 +1,6 @@
 import React from 'react';
 import formatDateTime from '../shared/dateFormatter';
+import Comments from './Comments';
 
 const Post = ({ data }) => {
   const formattedDate = formatDateTime(data.createdAt);
@@ -21,7 +22,7 @@ const Post = ({ data }) => {
       </h3>
       <p className="text-gray-700 text-sm">{data.content.message}</p>
       {data.comments.length > 0 ? (
-        data.comments.map((comment) => <p className="text-gray-700 text-xxs">{comment.message}</p>)
+        data.comments.map((comments) => <Comments data={comments}/>)
       ) : (
         <p className="text-center text-gray-600">
           Não há postagens para mostrar.
