@@ -1,38 +1,34 @@
-import React, { useState } from 'react';
-import useLogin from '../hooks/useLogin.tsx';
+import { useState } from 'react';
+import axios from 'axios';
+import { login } from '../services/authService.ts';
 
-const LoginForm: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const { performLogin, loading, error } = useLogin();
+const useLogin = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    await performLogin(email, password);
+  const performLogin = async (email: string, password: string) => {
+    setLoading(true);
+    setError('');
+    try {
+      const response = await login({ email, password });
+      return response;
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 401) {
+          setError('Invalid email / password');
+        } else {
+          setError('Erro de servidor');
+        }
+      } else {
+        setError('Erro ao fazer login');
+      }
+      return null;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Senha"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        type="submit"
-      >
-        Login
-      </button>
-    </form>
-  );
+  return { performLogin, loading, error };
 };
 
-export default LoginForm;
+export default useLogin;

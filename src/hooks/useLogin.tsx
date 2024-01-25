@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 import { login } from '../services/authService.ts';
 
 const useLogin = () => {
@@ -11,8 +12,16 @@ const useLogin = () => {
     try {
       const response = await login({ email, password });
       return response;
-    } catch (error) {
-      setError('Err to login');
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 401) {
+          setError('Invalid email / password');
+        } else {
+          setError('Erro de servidor');
+        }
+      } else {
+        setError('Erro ao fazer login');
+      }
       return null;
     } finally {
       setLoading(false);
