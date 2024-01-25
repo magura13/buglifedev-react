@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_URL = 'https://api-typescript-express.onrender.com'
-const API_BEARER_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NTlhODNkY2Q3N2NkZTIxNDA5ODc5N2MiLCJpYXQiOjE3MDYxMTMyNzksImV4cCI6MTcwNjE5OTY3OX0.G9COMNTiryEW_hoVMykgD4rw8eexjkzTJJrHK252Jy0';
+const API_BEARER_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NTlhODNkY2Q3N2NkZTIxNDA5ODc5N2MiLCJpYXQiOjE3MDYyMDc1MzEsImV4cCI6MTcwNjI5MzkzMX0.AOA5fiwZUgVKH5KH0I1PRwFZS6XvvJi2kGos4yHYDbA';
 
 const api = axios.create({
   baseURL: API_URL,
