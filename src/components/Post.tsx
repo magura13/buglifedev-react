@@ -4,13 +4,13 @@ import Comments from './Comments';
 
 const Post = ({ data }) => {
   const formattedDate = formatDateTime(data.createdAt);
-  const [showComments,setShowComents] = useState(false)
+  const [showComments, setShowComents] = useState(false)
 
-  const handleCommentClick = ()  => {
+  const handleCommentClick = () => {
     if (showComments) {
       setShowComents(false)
     } else
-    setShowComents(true)
+      setShowComents(true)
 
     console.log(showComments)
   }
@@ -31,14 +31,17 @@ const Post = ({ data }) => {
         {data.content.title}
       </h3>
       <p className="text-gray-700 text-sm">{data.content.message}</p>
-      <div className="display: flex justify-end" >
-        <p className="text-gray-700 text-sm mr-1  hover:underline hover:text-custom-blue cursor-pointer" onClick={handleCommentClick}>{data.comments.length} comentários</p>
+      <div className="display: flex justify-between mt-2">
+        <p className="text-red-500 cursor-pointer">❤️ Like</p>
+        <div className="display: flex justify-end" >
+          <p className="text-gray-700 text-sm mr-1  hover:underline hover:text-custom-blue cursor-pointer" onClick={handleCommentClick}>{data.comments.length} comentários</p>
+        </div>
       </div>
       {showComments ? (
-        data.comments.map((comments) => <Comments data={comments} />)
-      ) : (
+          data.comments.map((comments) => <Comments data={comments} />)
+        ) : (
           null
-      )}
+        )}
     </div>
   );
 };
