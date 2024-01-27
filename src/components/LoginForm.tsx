@@ -1,34 +1,49 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { login } from '../services/authService.ts';
+import React, { useState } from 'react';
+import useLogin from '../hooks/useLogin.tsx';
+import { toast } from 'react-toastify';
 
-const useLogin = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+const LoginForm = ({ onClose }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { performLogin, loading, error } = useLogin();
 
-  const performLogin = async (email: string, password: string) => {
-    setLoading(true);
-    setError('');
-    try {
-      const response = await login({ email, password });
-      return response;
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        if (err.response?.status === 401) {
-          setError('Invalid email / password');
-        } else {
-          setError('Erro de servidor');
-        }
-      } else {
-        setError('Erro ao fazer login');
-      }
-      return null;
-    } finally {
-      setLoading(false);
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const result = await performLogin(email, password);
+    if (result && result.accessToken) {
+      toast.success('Login bem-sucedido!');
+      onClose();
     }
   };
 
-  return { performLogin, loading, error };
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          value={email}
+          required
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+      <div>
+        <label htmlFor="password">Senha:</label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          required
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+      <button type="submit" disabled={loading}>
+        Login
+      </button>
+      {error && <p>{error}</p>}
+    </form>
+  );
 };
 
-export default useLogin;
+export default LoginForm;

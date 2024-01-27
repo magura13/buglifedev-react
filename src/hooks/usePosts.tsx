@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { getPosts } from '../services/posts.ts';
 import { PostData } from '../types/PostData.ts';
 
-const usePosts = (offset,limit) => {
+const usePosts = (offset, limit) => {
   const [posts, setPosts] = useState<PostData[]>([]);
-  const [hasMore,setHasMore] = useState(true)
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     const loadAllPosts = async () => {
       try {
-        const fetchedPosts = await getPosts(offset,limit);
+        const fetchedPosts = await getPosts(offset, limit);
         setPosts(fetchedPosts.data);
         setHasMore(fetchedPosts.hasMore);
       } catch (error) {
@@ -28,7 +28,7 @@ const usePosts = (offset,limit) => {
     }
   };
 
-  return { posts, hasMore,loadMore};
+  return { posts, hasMore, loadMore };
 };
 
 export default usePosts;

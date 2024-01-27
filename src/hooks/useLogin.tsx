@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { login } from '../services/authService.ts';
+import { storage } from '../utils/storage.ts';
+import { toast } from 'react-toastify';
 
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
@@ -10,7 +12,14 @@ const useLogin = () => {
     setLoading(true);
     setError('');
     try {
+      storage.clearStorage();
+
       const response = await login({ email, password });
+
+      storage.setItem('accessToken', response.accessToken);
+      storage.setItem('userId', response.userId);
+      storage.setItem('userName', response.userName);
+
       return response;
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -32,3 +41,6 @@ const useLogin = () => {
 };
 
 export default useLogin;
+function closeModal() {
+  throw new Error('Function not implemented.');
+}

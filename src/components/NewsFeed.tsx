@@ -2,7 +2,10 @@ import React from 'react';
 
 const NewsFeed: React.FC = () => {
   const mockNews = [
-    { title: 'Novidades da Comunidade', summary: 'Confira as últimas atualizações!' },
+    {
+      title: 'Novidades da Comunidade',
+      summary: 'Confira as últimas atualizações!',
+    },
     { title: 'NOTÍCIAS', summary: 'Participe do nosso próximo evento online.' },
   ];
 

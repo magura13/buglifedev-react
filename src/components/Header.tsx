@@ -9,7 +9,11 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
   return (
     <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
-      <img src={logo} alt="Logo BuglifeDev" className="h-14 w-14 rounded-full hover:scale-125 transition-transform duration-300" />
+      <img
+        src={logo}
+        alt="Logo BuglifeDev"
+        className="h-14 w-14 rounded-full hover:scale-125 transition-transform duration-300"
+      />
       <div className="flex-grow mx-4">
         <div className="relative">
           <input
@@ -24,8 +28,12 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
       </div>
       <nav>
         <ul className="flex">
-          <li className="ml-6 cursor-pointer" onClick={onLoginClick}>login</li>
-          <li className="ml-6 cursor-pointer" onClick={onSignUpClick}>cadastre</li>
+          <li className="ml-6 cursor-pointer" onClick={onLoginClick}>
+            login
+          </li>
+          <li className="ml-6 cursor-pointer" onClick={onSignUpClick}>
+            cadastre
+          </li>
         </ul>
       </nav>
     </header>

@@ -18,5 +18,5 @@ export const storage = {
   setItem,
   getItem,
   removeItem,
-  clearStorage
+  clearStorage,
 };

@@ -4,7 +4,7 @@ import { LoginCredentials } from '../types/AuthData';
 import { UserCredentials, UserResponse } from '../types/UserData';
 import { storage } from '../utils/storage.ts';
 
-const API_URL = "process.env.REACT_APP_API_URL";
+const API_URL = 'https://api-typescript-express.onrender.com';
 
 interface LoginResponse {
   accessToken: string;
@@ -32,9 +32,10 @@ const login = async (credentials: LoginCredentials): Promise<LoginResponse> => {
     return { accessToken, userId, userName };
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
-      const errorMessage = error.response.status === 401
-        ? 'Invalid email / password'
-        : 'Erro de servidor';
+      const errorMessage =
+        error.response.status === 401
+          ? 'Invalid email / password'
+          : 'Erro de servidor';
       throw new Error(errorMessage);
     } else {
       throw new Error('Erro ao fazer login');
@@ -42,7 +43,9 @@ const login = async (credentials: LoginCredentials): Promise<LoginResponse> => {
   }
 };
 
-const register = async (credentials: UserCredentials): Promise<UserResponse> => {
+const register = async (
+  credentials: UserCredentials
+): Promise<UserResponse> => {
   const response = await axios.post(`${API_URL}/user`, credentials);
   return response.data;
 };

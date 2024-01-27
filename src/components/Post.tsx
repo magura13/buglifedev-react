@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
 import formatDateTime from '../shared/dateFormatter';
-import Comments from './Comments';
+import Comments from './Comments.tsx';
 
 const Post = ({ data }) => {
   const formattedDate = formatDateTime(data.createdAt);
-  const [showComments, setShowComents] = useState(false)
+  const [showComments, setShowComents] = useState(false);
 
   const handleCommentClick = () => {
     if (showComments) {
-      setShowComents(false)
-    } else
-      setShowComents(true)
-
-    console.log(showComments)
-  }
+      setShowComents(false);
+    } else setShowComents(true);
+  };
 
   return (
     <div className="rounded overflow-hidden shadow-lg p-4 mb-6 text-left flex flex-col">
@@ -33,15 +30,18 @@ const Post = ({ data }) => {
       <p className="text-gray-700 text-sm">{data.content.message}</p>
       <div className="display: flex justify-between mt-2">
         <p className="text-red-500 cursor-pointer">❤️ Like</p>
-        <div className="display: flex justify-end" >
-          <p className="text-gray-700 text-sm mr-1  hover:underline hover:text-custom-blue cursor-pointer" onClick={handleCommentClick}>{data.comments.length} comentários</p>
+        <div className="display: flex justify-end">
+          <p
+            className="text-gray-700 text-sm mr-1  hover:underline hover:text-custom-blue cursor-pointer"
+            onClick={handleCommentClick}
+          >
+            {data.comments.length} comentários
+          </p>
         </div>
       </div>
-      {showComments ? (
-          data.comments.map((comments) => <Comments data={comments} />)
-        ) : (
-          null
-        )}
+      {showComments
+        ? data.comments.map((comments) => <Comments data={comments} />)
+        : null}
     </div>
   );
 };

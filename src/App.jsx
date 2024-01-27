@@ -8,6 +8,8 @@ import Header from './components/Header.tsx';
 import Footer from './components/Footer.tsx';
 import Modal from './components/Modal.tsx';
 import SignUpForm from './components/SignupForm.tsx';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -26,9 +28,17 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header onLoginClick={handleLoginClick} onSignUpClick={handleSignUpClick} />
+        <ToastContainer />
+        <Header
+          onLoginClick={handleLoginClick}
+          onSignUpClick={handleSignUpClick}
+        />
         <Modal isOpen={isModalOpen} onClose={closeModal}>
-          {modalContent === 'login' ? <LoginForm /> : <SignUpForm />}
+          {modalContent === 'login' ? (
+            <LoginForm onClose={closeModal} />
+          ) : (
+            <SignUpForm />
+          )}
         </Modal>
         <Routes>
           <Route path="/" element={<HomePage />} />

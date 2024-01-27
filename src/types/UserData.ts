@@ -9,7 +9,7 @@ export interface UserResponse {
     default: string;
     user: {
       userName: string;
-      password: string; //remove
+      password: string; //remove from backend
       email: string;
       openToWork: boolean;
       workAt: string[];

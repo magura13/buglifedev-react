@@ -20,7 +20,6 @@ const SignUpForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await performRegister(credentials);
-    console.log(response);
   };
 
   return (
