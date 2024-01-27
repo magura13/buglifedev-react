@@ -7,12 +7,19 @@ const LoginForm = ({ onClose }) => {
   const [password, setPassword] = useState('');
   const { performLogin, loading, error } = useLogin();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const result = await performLogin(email, password);
-    if (result && result.accessToken) {
-      toast.success('Login bem-sucedido!');
-      onClose();
+    try {
+      const result = await performLogin(email, password);
+      if (result && result.accessToken) {
+        toast.success('Login bem-sucedido!', {
+          onClose: () => {
+            onClose();
+          },
+        });
+      } 
+    } catch (error) {
+      toast.error(error.message || "Ocorreu um erro inesperado.");
     }
   };
 
@@ -38,7 +45,11 @@ const LoginForm = ({ onClose }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <button type="submit" disabled={loading}>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        type="submit"
+        disabled={loading}
+      >
         Login
       </button>
       {error && <p>{error}</p>}

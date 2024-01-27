@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { login } from '../services/authService.ts';
 import { storage } from '../utils/storage.ts';
-import { toast } from 'react-toastify';
 
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
@@ -22,16 +20,7 @@ const useLogin = () => {
 
       return response;
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        if (err.response?.status === 401) {
-          setError('Invalid email / password');
-        } else {
-          setError('Erro de servidor');
-        }
-      } else {
-        setError('Erro ao fazer login');
-      }
-      return null;
+      throw err;
     } finally {
       setLoading(false);
     }
@@ -41,6 +30,3 @@ const useLogin = () => {
 };
 
 export default useLogin;
-function closeModal() {
-  throw new Error('Function not implemented.');
-}
