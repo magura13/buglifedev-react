@@ -46,8 +46,17 @@ const login = async (credentials: LoginCredentials): Promise<LoginResponse> => {
 const register = async (
   credentials: UserCredentials
 ): Promise<UserResponse> => {
-  const response = await axios.post(`${API_URL}/user`, credentials);
-  return response.data;
+  try {
+    const response = await axios.post(`${API_URL}/user`, credentials);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      const errorMessage = error.response.data.ValidationErrors[0].msg;
+      throw new Error(errorMessage);
+    } else {
+      throw new Error('Erro ao fazer login');
+    }
+  }
 };
 
 export { login, register };

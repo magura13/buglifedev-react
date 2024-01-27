@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import useRegister from '../hooks/useRegister.tsx';
+import { toast } from 'react-toastify';
 
 const SignUpForm: React.FC = () => {
   const [credentials, setCredentials] = useState({
@@ -16,10 +17,15 @@ const SignUpForm: React.FC = () => {
       [name]: value,
     });
   };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await performRegister(credentials);
+    try {
+      await performRegister(credentials);
+      console.log(credentials);
+      toast.success('Cadastro bem-sucedido!');
+    } catch (error) {
+      toast.error('Erro ao registrar: ' + error.message);
+    }
   };
 
   return (

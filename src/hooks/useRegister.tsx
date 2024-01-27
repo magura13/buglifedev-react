@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { register } from '../services/authService.ts';
 import { UserCredentials } from '../types/UserData';
+import axios from 'axios';
 
 const useRegister = () => {
   const [loading, setLoading] = useState(false);
@@ -8,13 +9,13 @@ const useRegister = () => {
 
   const performRegister = async (credentials: UserCredentials) => {
     setLoading(true);
-    setError('');
     try {
       const response = await register(credentials);
-      return response;
-    } catch (error) {
-      setError('Erro ao registrar');
-      return null;
+      if (response) {
+        return response;
+      }
+    } catch (response) {
+      throw response;
     } finally {
       setLoading(false);
     }
