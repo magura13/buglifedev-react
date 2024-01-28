@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { register } from '../services/authService.ts';
 import { UserCredentials } from '../types/UserData';
-import axios from 'axios';
 
 const useRegister = () => {
   const [loading, setLoading] = useState(false);

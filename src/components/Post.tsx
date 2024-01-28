@@ -1,15 +1,15 @@
+
 import React, { useState } from 'react';
 import formatDateTime from '../shared/dateFormatter';
 import Comments from './Comments.tsx';
+import CommentForm from './CommentForm.tsx';
 
 const Post = ({ data }) => {
   const formattedDate = formatDateTime(data.createdAt);
-  const [showComments, setShowComents] = useState(false);
+  const [showComments, setShowComments] = useState(false);
 
   const handleCommentClick = () => {
-    if (showComments) {
-      setShowComents(false);
-    } else setShowComents(true);
+    setShowComments(!showComments);
   };
 
   return (
@@ -42,6 +42,7 @@ const Post = ({ data }) => {
       {showComments
         ? data.comments.map((comments) => <Comments data={comments} />)
         : null}
+        <CommentForm postId={data._id} userId="user-id-from-context-or-props" />
     </div>
   );
 };

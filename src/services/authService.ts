@@ -52,14 +52,19 @@ const register = async (
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
-      if (error.response.data.ValidationErrors && error.response.data.ValidationErrors.length > 0) {
+      if (
+        error.response.data.ValidationErrors &&
+        error.response.data.ValidationErrors.length > 0
+      ) {
         errorMessage = error.response.data.ValidationErrors[0].msg;
-      }
-      else if (error.response.data.response && error.response.data.response.default) {
+      } else if (
+        error.response.data.response &&
+        error.response.data.response.default
+      ) {
         errorMessage = error.response.data.response.default;
       }
     }
-    
+
     throw new Error(errorMessage);
   }
 };
