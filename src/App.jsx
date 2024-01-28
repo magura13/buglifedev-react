@@ -37,7 +37,7 @@ function App() {
           {modalContent === 'login' ? (
             <LoginForm onClose={closeModal} />
           ) : (
-            <SignUpForm />
+            <SignUpForm onClose={closeModal} />
           )}
         </Modal>
         <Routes>

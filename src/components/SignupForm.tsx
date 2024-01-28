@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import useRegister from '../hooks/useRegister.tsx';
 import { toast } from 'react-toastify';
 
-const SignUpForm: React.FC = () => {
+const SignUpForm = ({ onClose }) => {
   const [credentials, setCredentials] = useState({
     userName: '',
     email: '',
@@ -22,7 +22,11 @@ const SignUpForm: React.FC = () => {
     try {
       await performRegister(credentials);
       console.log(credentials);
-      toast.success('Cadastro bem-sucedido!');
+      toast.success('Cadastro bem-sucedido!', {
+        onClose: () => {
+          onClose();
+        },
+      });
     } catch (error) {
       toast.error('Erro ao registrar: ' + error.message);
     }

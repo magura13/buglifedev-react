@@ -46,16 +46,21 @@ const login = async (credentials: LoginCredentials): Promise<LoginResponse> => {
 const register = async (
   credentials: UserCredentials
 ): Promise<UserResponse> => {
+  let errorMessage = 'Erro desconhecido ao fazer o cadastro.';
   try {
     const response = await axios.post(`${API_URL}/user`, credentials);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
-      const errorMessage = error.response.data.ValidationErrors[0].msg;
-      throw new Error(errorMessage);
-    } else {
-      throw new Error('Erro ao fazer login');
+      if (error.response.data.ValidationErrors && error.response.data.ValidationErrors.length > 0) {
+        errorMessage = error.response.data.ValidationErrors[0].msg;
+      }
+      else if (error.response.data.response && error.response.data.response.default) {
+        errorMessage = error.response.data.response.default;
+      }
     }
+    
+    throw new Error(errorMessage);
   }
 };
 
