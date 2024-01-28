@@ -5,11 +5,17 @@ const useCreateComment = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const sendComment = async (postId: string, userId: string, message: string) => {
+  const sendComment = async (
+    postId: string,
+    userId: string,
+    message: string
+  ) => {
     setIsLoading(true);
     setError('');
     try {
-      await createComment(postId, userId, message);
+      const response = await createComment(postId, userId, message);
+      console.log(JSON.stringify(response.comment.message, null, 2));
+      return response.comment.message;
     } catch (err) {
       setError(err.response?.data?.message || 'Erro ao enviar comentário.');
     } finally {

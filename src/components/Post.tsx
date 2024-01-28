@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import formatDateTime from '../shared/dateFormatter';
 import Comments from './Comments.tsx';
@@ -8,6 +7,12 @@ const Post = ({ data }) => {
   const formattedDate = formatDateTime(data.createdAt);
   const [showComments, setShowComments] = useState(false);
 
+  const [comments, setComments] = useState(data.comments);
+
+  const addNewComment = (newComment) => {
+    setComments((prevComments) => [...prevComments, newComment]);
+  };
+
   const handleCommentClick = () => {
     setShowComments(!showComments);
   };
@@ -16,11 +21,11 @@ const Post = ({ data }) => {
     <div className="rounded overflow-hidden shadow-lg p-4 mb-6 text-left flex flex-col">
       <div className="display: flex">
         <p className="text-gray-700 text-xs mr-0.5">criado por:</p>
-        <p className="text-custom-blue font-bold text-xs font-semibold mr-0.5">
+        <p className="text-custom-blue text-xs font-semibold mr-0.5">
           {data.userName}
         </p>
         <p className="text-gray-700 text-xs mr-0.5">postado em</p>
-        <p className="text-custom-blue font-bold text-xs font-semibold">
+        <p className="text-custom-blue text-xs font-semibold">
           {formattedDate}
         </p>
       </div>
@@ -39,12 +44,28 @@ const Post = ({ data }) => {
           </p>
         </div>
       </div>
-      {showComments
-        ? data.comments.map((comments) => <Comments data={comments} />)
-        : null}
-        <CommentForm postId={data._id} userId="user-id-from-context-or-props" />
+      {showComments &&
+        comments.map((comment) => <Comments key={comment.id} data={comment} />)}
+      <CommentForm
+        postId={data._id}
+        userId="user-id-from-context-or-props"
+        onCommentAdded={addNewComment}
+      />
     </div>
   );
 };
 
+//essa merda de user-id-from-context-or-props está errada linha 45, possível falha de segurança a ser revista no backend
+// {
+//   "response": {
+//     "default": "Comment added successfully",
+//     "addedComment": {
+//       "status": "Comment added",
+//       "comment": {
+//         "userId": "user-id-from-context-or-props",
+//         "message": "asdasdasdas"
+//       }
+//     }
+//   }
+// }
 export default Post;

@@ -4,11 +4,15 @@ import useCreateComment from '../hooks/useCreateComment.tsx';
 
 interface CommentFormProps {
   postId: string;
-  userId: string; 
-  onClose?: () => void;
+  userId: string;
+  onCommentAdded: (newComment: string) => void;
 }
 
-const CommentForm: React.FC<CommentFormProps> = ({ postId, userId, onClose }) => {
+const CommentForm: React.FC<CommentFormProps> = ({
+  postId,
+  userId,
+  onCommentAdded,
+}) => {
   const [commentMessage, setCommentMessage] = useState('');
   const { isLoading, sendComment } = useCreateComment();
 
@@ -22,6 +26,8 @@ const CommentForm: React.FC<CommentFormProps> = ({ postId, userId, onClose }) =>
       await sendComment(postId, userId, commentMessage);
       setCommentMessage('');
       toast.success('Comentário adicionado!');
+      console.log('commentMessage' + commentMessage);
+      onCommentAdded(commentMessage);
     } catch (error) {
       toast.error('Erro ao adicionar o comentário: ' + error.message);
     }
