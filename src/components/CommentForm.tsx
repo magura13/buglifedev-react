@@ -3,14 +3,16 @@ import { toast } from 'react-toastify';
 import useCreateComment from '../hooks/useCreateComment.tsx';
 
 interface CommentFormProps {
-  postId: string;
-  userId: string;
+  postId: string | null;
+  userId: string | null;
+  userName:string | null,
   onCommentAdded: (newComment: string) => void;
 }
 
 const CommentForm: React.FC<CommentFormProps> = ({
   postId,
   userId,
+  userName,
   onCommentAdded,
 }) => {
   const [commentMessage, setCommentMessage] = useState('');
@@ -23,7 +25,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
       return;
     }
     try {
-      await sendComment(postId, userId, commentMessage);
+      await sendComment(postId, userId, userName, commentMessage);
       setCommentMessage('');
       toast.success('Comentário adicionado!');
       console.log('commentMessage' + commentMessage);

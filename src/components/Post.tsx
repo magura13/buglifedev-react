@@ -6,9 +6,9 @@ import CommentForm from './CommentForm.tsx';
 const Post = ({ data }) => {
   const formattedDate = formatDateTime(data.createdAt);
   const [showComments, setShowComments] = useState(false);
-
+  const userName = localStorage.getItem('userName');
+  const userId = localStorage.getItem('userId');
   const [comments, setComments] = useState(data.comments);
-
   const addNewComment = (newComment) => {
     setComments((prevComments) => [...prevComments, newComment]);
   };
@@ -45,27 +45,15 @@ const Post = ({ data }) => {
         </div>
       </div>
       {showComments &&
-        comments.map((comment) => <Comments key={comment.id} data={comment} />)}
+        comments.map((comment,forumPostId) => <Comments key={comment.id} data={comment} forumPostId={data._id} />)}
       <CommentForm
         postId={data._id}
-        userId="user-id-from-context-or-props"
+        userId={userId}
+        userName={userName}
         onCommentAdded={addNewComment}
       />
     </div>
   );
 };
 
-//essa merda de user-id-from-context-or-props está errada linha 45, possível falha de segurança a ser revista no backend
-// {
-//   "response": {
-//     "default": "Comment added successfully",
-//     "addedComment": {
-//       "status": "Comment added",
-//       "comment": {
-//         "userId": "user-id-from-context-or-props",
-//         "message": "asdasdasdas"
-//       }
-//     }
-//   }
-// }
 export default Post;

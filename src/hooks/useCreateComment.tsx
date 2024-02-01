@@ -6,14 +6,15 @@ const useCreateComment = () => {
   const [error, setError] = useState('');
 
   const sendComment = async (
-    postId: string,
-    userId: string,
+    postId: string | null,
+    userId: string | null,
+    userName: string | null,
     message: string
   ) => {
     setIsLoading(true);
     setError('');
     try {
-      const response = await createComment(postId, userId, message);
+      const response = await createComment(postId, userId, userName, message);
       console.log(JSON.stringify(response.comment.message, null, 2));
       return response.comment.message;
     } catch (err) {
