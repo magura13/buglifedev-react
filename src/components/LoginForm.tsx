@@ -16,10 +16,13 @@ const LoginForm = ({ onClose }) => {
           onClose: () => {
             onClose();
           },
+          autoClose: 2000,
         });
       }
     } catch (error) {
-      toast.error(error.message || 'Ocorreu um erro inesperado.');
+      toast.error(error.message || 'Ocorreu um erro inesperado.', {
+        autoClose: 2000,
+      });
     }
   };
 

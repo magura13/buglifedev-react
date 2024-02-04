@@ -6,7 +6,7 @@ const API_URL = 'https://api-typescript-express.onrender.com';
 export const createComment = async (
   postId: string | null,
   userId: string | null,
-  userName:string | null,
+  userName: string | null,
   message: string
 ): Promise<any> => {
   const token = storage.getItem('accessToken');
@@ -18,12 +18,14 @@ export const createComment = async (
   return response.data;
 };
 
-export const deleteComment = async (commentId:string | null, forumPostId:string | null,): Promise<any>  => {
+export const deleteComment = async (
+  commentId: string | null,
+  forumPostId: string | null
+): Promise<any> => {
   const token = storage.getItem('accessToken');
-  console.log("service delete comment",commentId)
   const response = await axios.delete(
     `${API_URL}/comments/${forumPostId}/${commentId}`,
     { headers: { Authorization: `Bearer ${token}` } }
   );
   return response.data;
-}
+};

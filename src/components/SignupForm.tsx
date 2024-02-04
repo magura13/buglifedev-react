@@ -21,14 +21,14 @@ const SignUpForm = ({ onClose }) => {
     e.preventDefault();
     try {
       await performRegister(credentials);
-      console.log(credentials);
       toast.success('Cadastro bem-sucedido!', {
         onClose: () => {
           onClose();
         },
+        autoClose: 2000,
       });
     } catch (error) {
-      toast.error('Erro ao registrar: ' + error.message);
+      toast.error('Erro ao registrar: ' + error.message, { autoClose: 2000 });
     }
   };
 

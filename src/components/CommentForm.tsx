@@ -5,7 +5,7 @@ import useCreateComment from '../hooks/useCreateComment.tsx';
 interface CommentFormProps {
   postId: string | null;
   userId: string | null;
-  userName:string | null,
+  userName: string | null;
   onCommentAdded: (newComment: string) => void;
 }
 
@@ -27,8 +27,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
     try {
       await sendComment(postId, userId, userName, commentMessage);
       setCommentMessage('');
-      toast.success('Comentário adicionado!');
-      console.log('commentMessage' + commentMessage);
+      toast.success('Comentário adicionado!', { autoClose: 1000 });
       onCommentAdded(commentMessage);
     } catch (error) {
       toast.error('Erro ao adicionar o comentário: ' + error.message);

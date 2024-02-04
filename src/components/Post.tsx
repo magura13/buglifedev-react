@@ -45,7 +45,9 @@ const Post = ({ data }) => {
         </div>
       </div>
       {showComments &&
-        comments.map((comment,forumPostId) => <Comments key={comment.id} data={comment} forumPostId={data._id} />)}
+        comments.map((comment, forumPostId) => (
+          <Comments key={comment.id} data={comment} forumPostId={data._id} />
+        ))}
       <CommentForm
         postId={data._id}
         userId={userId}
