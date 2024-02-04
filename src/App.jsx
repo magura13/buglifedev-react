@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function App() {
   const { isModalOpen, openModal, closeModal } = useModal();
   const [modalContent, setModalContent] = useState('login');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const handleLoginClick = () => {
     setModalContent('login');
@@ -32,6 +33,8 @@ function App() {
         <Header
           onLoginClick={handleLoginClick}
           onSignUpClick={handleSignUpClick}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
         />
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           {modalContent === 'login' ? (
@@ -41,7 +44,7 @@ function App() {
           )}
         </Modal>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage searchTerm={searchTerm} />} />{' '}
         </Routes>
         <Footer />
       </div>

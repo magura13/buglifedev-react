@@ -4,9 +4,16 @@ import logo from '../assets/logo.png';
 type HeaderProps = {
   onLoginClick: () => void;
   onSignUpClick: () => void;
+  searchTerm: string;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
+const Header: React.FC<HeaderProps> = ({
+  onLoginClick,
+  onSignUpClick,
+  searchTerm,
+  setSearchTerm,
+}) => {
   return (
     <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
       <img
@@ -20,10 +27,12 @@ const Header: React.FC<HeaderProps> = ({ onLoginClick, onSignUpClick }) => {
             type="search"
             className="w-2/4 px-4 py-2 rounded-lg text-gray-700 focus:outline-none placeholder-white"
             placeholder="Faça sua pesquisa :)"
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }}
           />
-          <button className="absolute right-0 top-0 mt-2 mr-4">
-            {/*  ícone lupa*/}
-          </button>
+          <button className="absolute right-0 top-0 mt-2 mr-4"></button>
         </div>
       </div>
       <nav>

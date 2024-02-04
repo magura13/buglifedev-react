@@ -9,6 +9,7 @@ export interface PostData {
   userId: string;
   createdAt: string;
   updatedAt: string;
+  userName: string;
   __v: number;
   comments: CommentData[];
 }

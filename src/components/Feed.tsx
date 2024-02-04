@@ -1,11 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import Post from './Post.tsx';
 import usePosts from '../hooks/usePosts.tsx';
+import { PostData } from '../types/PostData.ts';
 
-const Feed = () => {
+interface FeedProps {
+  searchTerm: string;
+}
+
+const Feed: React.FC<FeedProps> = ({ searchTerm }) => {
   const [offset, setOffset] = useState(0);
   const limit = 4;
+  const [filteredPosts, setFilteredPosts] = useState<PostData[]>([]);
   const { posts, hasMore, loadMore } = usePosts(offset, limit);
+
+  useEffect(() => {
+    const lowercasedFilter = searchTerm.toLowerCase();
+    const filteredData = posts.filter((post) => {
+      return (
+        post.content.title.toLowerCase().includes(lowercasedFilter) ||
+        post.content.message.toLowerCase().includes(lowercasedFilter) ||
+        post.userName.toLowerCase().includes(lowercasedFilter)
+      );
+    });
+    setFilteredPosts(filteredData);
+  }, [searchTerm, posts]);
 
   const loadMorePosts = () => {
     const newOffset = offset + limit;
@@ -15,8 +33,8 @@ const Feed = () => {
 
   return (
     <div className="container mx-auto p-4">
-      {posts.length > 0 ? (
-        posts.map((post) => <Post key={post._id} data={post} />)
+      {filteredPosts.length > 0 ? (
+        filteredPosts.map((post) => <Post key={post._id} data={post} />)
       ) : (
         <p className="text-center text-gray-600">
           Não há postagens para mostrar.
