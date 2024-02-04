@@ -37,7 +37,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
   return (
     <form onSubmit={handleSubmit} className="mt-4">
       <textarea
-        className="w-full p-2 text-sm text-gray-700 border rounded-lg focus:outline-none"
+        className="w-full h-10 p-2 text-sm text-gray-700 border rounded-lg focus:outline-none"
         rows={3}
         placeholder="Adicione um comentário..."
         value={commentMessage}
