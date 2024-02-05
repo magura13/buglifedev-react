@@ -1,12 +1,30 @@
 import React, { useState } from 'react';
+import useCreatePost from '../hooks/userCreatePost.tsx'
+import { toast } from 'react-toastify';
+import { storage } from '../utils/storage.ts';
 
 const TaskForm = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const {isLoading,sendPost} =  useCreatePost();
+  const userId = storage.getItem('userId');
+  const userName = storage.getItem('userName');
+  const content = {title:title,message:description};
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log({ title, description });
+    if (!title.trim() || !description.trim() ) {
+      toast.error('O comentário/título não pode estar vazio.');
+      return;
+    }
+    try {
+      await sendPost( userId, userName, content);
+      setDescription('');
+      setTitle('');
+      toast.success('Post adicionado!', { autoClose: 1000 });
+    } catch (error) {
+      toast.error('Erro ao adicionar post: ' + error.message);
+    }
   };
 
   return (
