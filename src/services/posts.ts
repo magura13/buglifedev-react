@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL = 'https://api-typescript-express.onrender.com';
 
-const API_BEARER_TOKEN = localStorage.getItem('accessToken');
+const API_BEARER_TOKEN ='2b187843-2bd7-4160-8d4f-83034c3ab2c3';
 
 const api = axios.create({
   baseURL: API_URL,
