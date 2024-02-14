@@ -17,7 +17,7 @@ const useCreateComment = () => {
       const response = await createComment(postId, userId, userName, message);
       return response.comment.message;
     } catch (err) {
-      setError(err.response?.data?.message || 'Erro ao enviar comentário.');
+      throw err
     } finally {
       setIsLoading(false);
     }

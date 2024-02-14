@@ -27,25 +27,34 @@ const LoginForm = ({ onClose }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="email">Email:</label>
+    <form onSubmit={handleSubmit } className="space-y-4  ">
+      <div className='flex-col flex items-start'>
+        <label 
+        htmlFor="email"
+        className="block text-sm text-gray-700"
+        >Email:</label>
         <input
           type="email"
           id="email"
           value={email}
           required
+          placeholder='Seu e-mail'
           onChange={(e) => setEmail(e.target.value)}
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-0.5 text-sm"
         />
       </div>
-      <div>
-        <label htmlFor="password">Senha:</label>
+      <div className='flex-col flex items-start'>
+        <label 
+        htmlFor="email"
+        className="block text-sm text-gray-700">Senha:</label>
         <input
           type="password"
           id="password"
           value={password}
           required
+          placeholder='Sua senha'
           onChange={(e) => setPassword(e.target.value)}
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-0.5 text-sm"
         />
       </div>
       <button

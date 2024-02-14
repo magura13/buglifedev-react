@@ -33,11 +33,11 @@ const SignUpForm = ({ onClose }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
+    <form onSubmit={handleSubmit} className="space-y-4 ">
+      <div className='flex-col flex items-start'>
         <label
           htmlFor="userName"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm text-gray-700"
         >
           Nome de usuário
         </label>
@@ -49,13 +49,13 @@ const SignUpForm = ({ onClose }) => {
           placeholder="Seu nome de usuário"
           value={credentials.userName}
           onChange={handleChange}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-0.5 text-sm"
         />
       </div>
-      <div>
+      <div className='flex-col flex items-start'>
         <label
           htmlFor="email"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm text-gray-700"
         >
           E-mail
         </label>
@@ -67,13 +67,13 @@ const SignUpForm = ({ onClose }) => {
           placeholder="Seu e-mail"
           value={credentials.email}
           onChange={handleChange}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-0.5 text-sm"
         />
       </div>
-      <div>
+      <div className='flex-col flex items-start'>
         <label
           htmlFor="password"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm text-gray-700"
         >
           Senha
         </label>
@@ -85,7 +85,7 @@ const SignUpForm = ({ onClose }) => {
           placeholder="Sua senha"
           value={credentials.password}
           onChange={handleChange}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-0.5 text-sm"
         />
       </div>
       <div>

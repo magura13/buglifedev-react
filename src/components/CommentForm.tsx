@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import useCreateComment from '../hooks/useCreateComment.tsx';
+import {ErrorFilter} from '../shared/errorfilter.ts'
 
 interface CommentFormProps {
   postId: string | null;
@@ -30,7 +31,8 @@ const CommentForm: React.FC<CommentFormProps> = ({
       toast.success('Comentário adicionado!', { autoClose: 1000 });
       onCommentAdded(commentMessage);
     } catch (error) {
-      toast.error('Erro ao adicionar o comentário: ' + error.message);
+      const filteredError = ErrorFilter.shapingResponse(error.response.status);
+      toast.error('Erro ao adicionar o comentário: ' + filteredError);
     }
   };
 

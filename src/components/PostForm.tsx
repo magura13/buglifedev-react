@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import useCreatePost from '../hooks/userCreatePost.tsx'
 import { toast } from 'react-toastify';
 import { storage } from '../utils/storage.ts';
+import {ErrorFilter} from '../shared/errorfilter.ts'
 
 const TaskForm = () => {
   const [title, setTitle] = useState('');
@@ -18,12 +19,13 @@ const TaskForm = () => {
       return;
     }
     try {
-      await sendPost( userId, userName, content);
+      const x = await sendPost( userId, userName, content);
       setDescription('');
       setTitle('');
       toast.success('Post adicionado!', { autoClose: 1000 });
     } catch (error) {
-      toast.error('Erro ao adicionar post: ' + error.message);
+      const filteredError = ErrorFilter.shapingResponse(error.response.status);
+      toast.error('Erro ao adicionar post: ' + filteredError);
     }
   };
 

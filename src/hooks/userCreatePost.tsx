@@ -3,7 +3,6 @@ import { createPost } from '../services/forumPostService.ts';
 
 const useCreatePost= () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
 
   const sendPost = async (
     userId: string | null,
@@ -14,18 +13,17 @@ const useCreatePost= () => {
     }
   ) => {
     setIsLoading(true);
-    setError('');
     try {
       const response = await createPost( userId, userName, content);
-      return response.comment.message;
+      return response;
     } catch (err) {
-      setError(err.response?.data?.message || 'Erro ao enviar comentário.');
+      throw err
     } finally {
       setIsLoading(false);
     }
   };
 
-  return { sendPost, isLoading, error };
+  return { sendPost, isLoading};
 };
 
 export default useCreatePost
