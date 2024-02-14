@@ -15,7 +15,7 @@ const useCreateComment = () => {
     setError('');
     try {
       const response = await createComment(postId, userId, userName, message);
-      return response.comment.message;
+      return response.addedComment.comment;
     } catch (err) {
       throw err
     } finally {

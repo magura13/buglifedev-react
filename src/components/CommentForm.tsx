@@ -7,7 +7,7 @@ interface CommentFormProps {
   postId: string | null;
   userId: string | null;
   userName: string | null;
-  onCommentAdded: (newComment: string) => void;
+  onCommentAdded: (newComment) => void;
 }
 
 const CommentForm: React.FC<CommentFormProps> = ({
@@ -26,10 +26,10 @@ const CommentForm: React.FC<CommentFormProps> = ({
       return;
     }
     try {
-      await sendComment(postId, userId, userName, commentMessage);
+      const newComment = await sendComment(postId, userId, userName, commentMessage);
       setCommentMessage('');
       toast.success('Comentário adicionado!', { autoClose: 1000 });
-      onCommentAdded(commentMessage);
+      onCommentAdded(newComment);
     } catch (error) {
       const filteredError = ErrorFilter.shapingResponse(error.response.status);
       toast.error('Erro ao adicionar o comentário: ' + filteredError);

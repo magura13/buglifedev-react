@@ -15,7 +15,7 @@ export const createComment = async (
     { userId, userName, message },
     { headers: { Authorization: `Bearer ${token}` } }
   );
-  return response.data;
+  return response.data.response;
 };
 
 export const deleteComment = async (
