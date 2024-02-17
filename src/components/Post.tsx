@@ -2,16 +2,39 @@ import React, { useState } from 'react';
 import formatDateTime from '../shared/dateFormatter';
 import Comments from './Comments.tsx';
 import CommentForm from './CommentForm.tsx';
+import useCreateLike from '../hooks/useCreateLike.tsx';
+import { LikeData } from '../types/LikeData.ts';
+import { toast } from 'react-toastify';
+import { ErrorFilter } from '../shared/errorfilter.ts';
 
 const Post = ({ data }) => {
   const formattedDate = formatDateTime(data.createdAt);
   const [showComments, setShowComments] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
   const userName = localStorage.getItem('userName');
-  const userId = localStorage.getItem('userId');
+  const userId = localStorage.getItem('userId')?.toString();
   const [comments, setComments] = useState(data.comments);
+  const { sendLike,isLoading,error } = useCreateLike();
+
+
   const addNewComment = (newComment) => {
     setComments((prevComments) => [...prevComments, newComment]);
   };
+
+  const handleLike = async () => {
+    try {
+
+      const forumPostId = data?._id
+      const likeData:LikeData = {forumPostId,userId}
+      await sendLike(likeData)
+      toast.success('Post curtido :)', { autoClose: 1000 });
+
+    } catch(err) {
+      const filteredError = ErrorFilter.shapingResponse(err.response.status); 
+      toast.error('Erro ao adicionar o comentário: ' + filteredError);
+
+    }
+  }
 
   const handleCommentClick = () => {
     setShowComments(!showComments);
@@ -34,7 +57,9 @@ const Post = ({ data }) => {
       </h3>
       <p className="text-gray-700 text-sm">{data.content.message}</p>
       <div className="display: flex justify-between mt-2">
-        <p className="text-red-500 cursor-pointer">❤️ Like</p>
+        <p 
+        onClick={handleLike}
+        className="text-red-500 cursor-pointer">❤️ Like</p>
         <div className="display: flex justify-end">
           <p
             className="text-gray-700 text-sm mr-1  hover:underline hover:text-custom-blue cursor-pointer"

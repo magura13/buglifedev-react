@@ -5,7 +5,7 @@ import {ErrorFilter} from '../shared/errorfilter.ts'
 
 interface CommentFormProps {
   postId: string | null;
-  userId: string | null;
+  userId: string | null | undefined;
   userName: string | null;
   onCommentAdded: (newComment) => void;
 }

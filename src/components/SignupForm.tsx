@@ -92,7 +92,7 @@ const SignUpForm = ({ onClose }) => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           {loading ? 'Cadastrando...' : 'Cadastrar'}
         </button>

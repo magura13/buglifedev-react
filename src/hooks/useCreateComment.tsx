@@ -7,8 +7,8 @@ const useCreateComment = () => {
 
   const sendComment = async (
     postId: string | null,
-    userId: string | null,
-    userName: string | null,
+    userId: string | null | undefined,
+    userName: string | null ,
     message: string
   ) => {
     setIsLoading(true);

@@ -1,32 +1,28 @@
 import axios from 'axios';
 import { storage } from '../utils/storage.ts';
+import {LikeData} from '../types/LikeData.ts'
 
 // const API_URL = 'https://api-typescript-express.onrender.com';
 
 const API_URL = 'http://localhost:8000'
-
-export const createComment = async (
-  postId: string | null,
-  userId: string | null  | undefined,
-  userName: string | null,
-  message: string
-): Promise<any> => {
+export const createLike = async (
+    LikeData:LikeData
+): Promise<Response> => {
   const token = storage.getItem('accessToken');
   const response = await axios.post(
-    `${API_URL}/forumpost/${postId}/comments`,
-    { userId, userName, message },
+    `${API_URL}/like/${LikeData.forumPostId}/${LikeData.userId}`,
+    {},
     { headers: { Authorization: `Bearer ${token}` } }
   );
   return response.data.response;
 };
 
-export const deleteComment = async (
-  commentId: string | null,
-  forumPostId: string | null
+export const deleteLike = async (
+    LikeData:LikeData
 ): Promise<any> => {
   const token = storage.getItem('accessToken');
   const response = await axios.delete(
-    `${API_URL}/comments/${forumPostId}/${commentId}`,
+    `${API_URL}/like/${LikeData.forumPostId}/${LikeData.userId}`,
     { headers: { Authorization: `Bearer ${token}` } }
   );
   return response.data;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getPosts } from '../services/posts.ts';
+import { getPosts } from '../services/forumPosts.ts';
 import { PostData } from '../types/PostData.ts';
 
 const usePosts = (offset, limit) => {
