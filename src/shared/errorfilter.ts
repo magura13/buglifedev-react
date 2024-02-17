@@ -4,7 +4,10 @@ export class ErrorFilter {
             return "Login pendente"
         } else if (statusCode === 400) {
             return "Campos em Branco"
+        } else if (statusCode === 409) {
+            return "Post já curtido :)"
         }
+        
         return "Erro inesperado"
     }
 }

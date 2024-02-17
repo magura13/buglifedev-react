@@ -31,7 +31,7 @@ const Post = ({ data }) => {
 
     } catch(err) {
       const filteredError = ErrorFilter.shapingResponse(err.response.status); 
-      toast.error('Erro ao adicionar o comentário: ' + filteredError);
+      toast.info(filteredError);
 
     }
   }
