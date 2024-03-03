@@ -7,7 +7,6 @@ export class ErrorFilter {
         } else if (statusCode === 409) {
             return "Post já curtido :)"
         }
-        
         return "Erro inesperado"
     }
 }

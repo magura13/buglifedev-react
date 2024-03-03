@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { storage } from '../utils/storage.ts';
 
-const API_URL = 'https://api-typescript-express.onrender.com';
+// const API_URL = 'https://api-typescript-express.onrender.com';
+
+const API_URL = 'http://localhost:3001'
 
 export const createPost = async (
   userId: string | null,
@@ -9,6 +11,7 @@ export const createPost = async (
   content: {
     title: string
     message: string
+    images: Array<{ sort: string, extension: string, path: string }>
   }
 ): Promise<any> => {
   const token = storage.getItem('accessToken');
@@ -23,6 +26,7 @@ export const createPost = async (
     throw err
   }
 };
+
 
 export const deletePost = async (
   forumPostId: string | null

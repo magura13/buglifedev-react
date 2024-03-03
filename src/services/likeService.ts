@@ -2,7 +2,9 @@ import axios from 'axios';
 import { storage } from '../utils/storage.ts';
 import {LikeData} from '../types/LikeData.ts'
 
-const API_URL = 'https://api-typescript-express.onrender.com';
+// const API_URL = 'https://api-typescript-express.onrender.com';
+
+const API_URL = 'http://localhost:3001'
 
 export const createLike = async (
     LikeData:LikeData

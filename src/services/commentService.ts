@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { storage } from '../utils/storage.ts';
 
-const API_URL = 'https://api-typescript-express.onrender.com';
-
+// const API_URL = 'https://api-typescript-express.onrender.com';
+const API_URL = 'http://localhost:3001'
 export const createComment = async (
   postId: string | null,
   userId: string | null  | undefined,

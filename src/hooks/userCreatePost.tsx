@@ -1,20 +1,22 @@
 import { useState } from 'react';
 import { createPost } from '../services/forumPostService.ts';
 
-const useCreatePost= () => {
+const useCreatePost = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const sendPost = async (
     userId: string | null,
     userName: string | null,
-    content:{
-      title:string
+
+    content: {
+      title: string
       message: string
+      images: Array<{ sort: string, extension: string, path: string }>
     }
   ) => {
     setIsLoading(true);
     try {
-      const response = await createPost( userId, userName, content);
+      const response = await createPost(userId, userName, content);
       return response;
     } catch (err) {
       throw err
@@ -23,8 +25,8 @@ const useCreatePost= () => {
     }
   };
 
-  return { sendPost, isLoading};
+  return { sendPost, isLoading };
 };
 
 export default useCreatePost
-;
+  ;

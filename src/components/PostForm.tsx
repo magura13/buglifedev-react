@@ -2,24 +2,39 @@ import React, { useState } from 'react';
 import useCreatePost from '../hooks/userCreatePost.tsx'
 import { toast } from 'react-toastify';
 import { storage } from '../utils/storage.ts';
-import {ErrorFilter} from '../shared/errorfilter.ts'
+import { ErrorFilter } from '../shared/errorfilter.ts'
+import useCreateImage from '../hooks/useCreateImage.tsx';
 
 const TaskForm = () => {
   const [title, setTitle] = useState('');
+  const [imgContent, setImgContent] = useState('');
   const [description, setDescription] = useState('');
-  const {isLoading,sendPost} =  useCreatePost();
+  const { isLoading, sendPost } = useCreatePost();
+  const {getURL, sendImage} = useCreateImage();
   const userId = storage.getItem('userId');
   const userName = storage.getItem('userName');
-  const content = {title:title,message:description};
+  
+
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!title.trim() || !description.trim() ) {
+    if (!title.trim() || !description.trim()) {
       toast.error('O comentário/título não pode estar vazio.');
       return;
     }
     try {
-      const x = await sendPost( userId, userName, content);
+
+      // enviando imagem
+      const imgName = imgContent.name
+      const type = imgContent.type
+      const urlResponse =  await getURL(imgName,type)
+      const url = urlResponse.data.signedUrl
+      const fileLink = urlResponse.data.fileLink
+      const respImage =  await sendImage(url,imgContent)
+      
+
+      const content = { title: title, message: description,images: {sort:1,extension:type,path:fileLink}  };
+      await sendPost(userId, userName,content );
       setDescription('');
       setTitle('');
       toast.success('Post adicionado!', { autoClose: 1000 });
@@ -27,6 +42,11 @@ const TaskForm = () => {
       const filteredError = ErrorFilter.shapingResponse(error.response.status);
       toast.error('Erro ao adicionar post: ' + filteredError);
     }
+  };
+
+  const handleFileChange = (event) => {
+    setImgContent(event.target.files[0]);
+    console.log(imgContent)
   };
 
   return (
@@ -56,6 +76,10 @@ const TaskForm = () => {
         >
           Crie um Post
         </button>
+        <input
+          type="file" id="imageUpload" name="image" accept="image/*" onChange={handleFileChange}
+        >
+        </input>
       </div>
     </form>
   );
