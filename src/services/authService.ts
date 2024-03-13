@@ -4,9 +4,7 @@ import { LoginCredentials } from '../types/AuthData';
 import { UserCredentials, UserResponse } from '../types/UserData';
 import { storage } from '../utils/storage.ts';
 
-// const API_URL = 'https://api-typescript-express.onrender.com';
-
-const API_URL = 'http://localhost:3001'
+const API_URL = 'https://api-typescript-express.onrender.com'
 
 interface LoginResponse {
   accessToken: string;

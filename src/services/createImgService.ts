@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-// const API_URL = 'https://api-typescript-express.onrender.com';
+const API_URL = 'https://api-typescript-express.onrender.com'
 
-const API_URL = 'http://localhost:3001'
 
 export const getServiceUrl = async (
   imgName,
