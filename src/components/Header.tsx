@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '../assets/logo.png';
+import { redirect, useNavigate } from 'react-router-dom';
 
 type HeaderProps = {
   onLoginClick: () => void;
   onSignUpClick: () => void;
   searchTerm: string;
+  isLogged:boolean
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 };
 
@@ -13,7 +15,18 @@ const Header: React.FC<HeaderProps> = ({
   onSignUpClick,
   searchTerm,
   setSearchTerm,
+  isLogged,
 }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken")
+    localStorage.removeItem("userName")
+    localStorage.removeItem("userId")
+    window.location.reload()
+
+  }
+
   return (
     <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
       <img
@@ -35,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({
           <button className="absolute right-0 top-0 mt-2 mr-4"></button>
         </div>
       </div>
-      <nav>
+      {!isLogged ? <nav>
         <ul className="flex">
           <li className="ml-6 cursor-pointer" onClick={onLoginClick}>
             login
@@ -44,7 +57,16 @@ const Header: React.FC<HeaderProps> = ({
             cadastre
           </li>
         </ul>
-      </nav>
+      </nav> : 
+      <nav>
+      <ul className="flex">
+        <li className="ml-6 cursor-pointer" onClick={handleLogout}>
+          logout
+        </li>
+      </ul>
+    </nav>
+      }
+      
     </header>
   );
 };

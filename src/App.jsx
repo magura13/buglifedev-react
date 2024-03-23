@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage.tsx';
@@ -15,6 +15,20 @@ function App() {
   const { isModalOpen, openModal, closeModal } = useModal();
   const [modalContent, setModalContent] = useState('login');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLogged,setIsLogged] = useState(false)
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      setIsLogged(true);
+    }
+    
+  }, []);
+
+  const handleLoginSuccess = () => {
+    setIsLogged(true);
+    closeModal();
+  };
 
   const handleLoginClick = () => {
     setModalContent('login');
@@ -35,16 +49,17 @@ function App() {
           onSignUpClick={handleSignUpClick}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
+          isLogged={isLogged}
         />
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           {modalContent === 'login' ? (
-            <LoginForm onClose={closeModal} />
+            <LoginForm onClose={closeModal} onLoginSuccess={handleLoginSuccess} />
           ) : (
             <SignUpForm onClose={closeModal} />
           )}
         </Modal>
         <Routes>
-          <Route path="/" element={<HomePage searchTerm={searchTerm} />} />{' '}
+          <Route path="/" element={<HomePage searchTerm={searchTerm} isLogged={isLogged}  />} />{' '}
         </Routes>
         <Footer />
       </div>

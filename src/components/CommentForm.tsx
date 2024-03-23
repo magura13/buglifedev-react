@@ -7,6 +7,7 @@ interface CommentFormProps {
   postId: string | null;
   userId: string | null | undefined;
   userName: string | null;
+  isLoggedIn:boolean;
   onCommentAdded: (newComment) => void;
 }
 
@@ -15,12 +16,18 @@ const CommentForm: React.FC<CommentFormProps> = ({
   userId,
   userName,
   onCommentAdded,
+  isLoggedIn
 }) => {
   const [commentMessage, setCommentMessage] = useState('');
   const { isLoading, sendComment } = useCreateComment();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!isLoggedIn) {
+      toast.info('Necessário login')
+      return
+    }
     if (!commentMessage.trim()) {
       toast.error('O comentário não pode estar vazio.');
       return;

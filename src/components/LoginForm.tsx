@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import useLogin from '../hooks/useLogin.tsx';
 import { toast } from 'react-toastify';
 
-const LoginForm = ({ onClose }) => {
+const LoginForm = ({ onClose ,onLoginSuccess}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { performLogin, loading, error } = useLogin();
@@ -18,6 +18,7 @@ const LoginForm = ({ onClose }) => {
           },
           autoClose: 2000,
         });
+        onLoginSuccess()
       }
     } catch (error) {
       toast.error(error.message || 'Ocorreu um erro inesperado.', {

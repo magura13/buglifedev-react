@@ -5,9 +5,10 @@ import { PostData } from '../types/PostData.ts';
 
 interface FeedProps {
   searchTerm: string;
+  isLoggedIn:boolean
 }
 
-const Feed: React.FC<FeedProps> = ({ searchTerm }) => {
+const Feed: React.FC<FeedProps> = ({ searchTerm,isLoggedIn}) => {
   const [offset, setOffset] = useState(0);
   const limit = 4;
   const [filteredPosts, setFilteredPosts] = useState<PostData[]>([]);
@@ -34,7 +35,7 @@ const Feed: React.FC<FeedProps> = ({ searchTerm }) => {
   return (
     <div className="container mx-auto p-4">
       {filteredPosts.length > 0 ? (
-        filteredPosts.map((post) => <Post key={post._id} data={post} />)
+        filteredPosts.map((post) => <Post data={post} isLoggedIn={isLoggedIn} />)
       ) : (
         <p className="text-center text-gray-600">
           Não há postagens para mostrar.

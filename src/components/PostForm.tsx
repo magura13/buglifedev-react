@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useCreatePost from '../hooks/userCreatePost.tsx'
 import { toast } from 'react-toastify';
 import { storage } from '../utils/storage.ts';
@@ -14,10 +14,25 @@ const TaskForm = () => {
   const userId = storage.getItem('userId');
   const userName = storage.getItem('userName');
   
+  const [isLogged,setIsLogged] = useState(false)
+  
+  useEffect(() => {
+   const accessToken = localStorage.getItem('accessToken');
+   if (accessToken) {
+     setIsLogged(true);
+   }
+   
+ }, []);
 
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!isLogged) {
+      toast.info('Necessário login')
+      return
+    }
+
     if (!title.trim() || !description.trim()) {
       toast.error('O comentário/título não pode estar vazio.');
       return;
@@ -32,7 +47,6 @@ const TaskForm = () => {
       const fileLink = urlResponse.data.fileLink
       const respImage =  await sendImage(url,imgContent)
       
-
       const content = { title: title, message: description,images: {sort:1,extension:type,path:fileLink}  };
       await sendPost(userId, userName,content );
       setDescription('');

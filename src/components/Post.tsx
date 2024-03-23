@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import formatDateTime from '../shared/dateFormatter';
 import Comments from './Comments.tsx';
 import CommentForm from './CommentForm.tsx';
@@ -7,7 +7,7 @@ import { LikeData } from '../types/LikeData.ts';
 import { toast } from 'react-toastify';
 import { ErrorFilter } from '../shared/errorfilter.ts';
 
-const Post = ({ data }) => {
+const Post = ({ data,isLoggedIn }) => {
   const formattedDate = formatDateTime(data.createdAt);
   const [showComments, setShowComments] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -22,8 +22,12 @@ const Post = ({ data }) => {
   };
 
   const handleLike = async () => {
-    try {
 
+    try {
+      if (!isLoggedIn) {
+        toast.info('Necessário login')
+        return
+      }
       const forumPostId = data?._id
       const likeData: LikeData = { forumPostId, userId }
       await sendLike(likeData)
@@ -82,6 +86,7 @@ const Post = ({ data }) => {
         userId={userId}
         userName={userName}
         onCommentAdded={addNewComment}
+        isLoggedIn={isLoggedIn}
       />
     </div>
   );
