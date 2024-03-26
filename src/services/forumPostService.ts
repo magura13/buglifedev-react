@@ -10,7 +10,7 @@ export const createPost = async (
   content: {
     title: string
     message: string
-    images: Array<{ sort: string, extension: string, path: string }>
+    images?: Array<{ sort: number, extension: string, path: string }>
   }
 ): Promise<any> => {
   const token = storage.getItem('accessToken');

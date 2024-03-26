@@ -11,7 +11,7 @@ const useCreatePost = () => {
     content: {
       title: string
       message: string
-      images: Array<{ sort: string, extension: string, path: string }>
+      images?: Array<{ sort: number, extension: string, path: string }>
     }
   ) => {
     setIsLoading(true);

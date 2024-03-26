@@ -10,12 +10,13 @@ export const getServiceUrl = async (
   // const token = storage.getItem('accessToken');
   try {
     const response = await axios.post(
-      `http://localhost:3001/api/s3/signed_url`,
+      `${API_URL}/api/s3/signed_url`,
       { key:imgName,content_type:contentType },
       // { headers: { Authorization: `Bearer ${token}` } }
     );
     return response.data;
   } catch (err) {
+    err.response = {status:501}
     throw err
   }
 };

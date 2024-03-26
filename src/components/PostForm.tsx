@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect,useContext, useState } from 'react';
+import UserContext from '../contexts/authProvider.tsx';
 import useCreatePost from '../hooks/userCreatePost.tsx'
 import { toast } from 'react-toastify';
 import { storage } from '../utils/storage.ts';
 import { ErrorFilter } from '../shared/errorfilter.ts'
+
 import useCreateImage from '../hooks/useCreateImage.tsx';
 
 const TaskForm = () => {
@@ -10,20 +12,10 @@ const TaskForm = () => {
   const [imgContent, setImgContent] = useState('');
   const [description, setDescription] = useState('');
   const { isLoading, sendPost } = useCreatePost();
-  const {getURL, sendImage} = useCreateImage();
+  const { getURL, sendImage } = useCreateImage();
   const userId = storage.getItem('userId');
   const userName = storage.getItem('userName');
-  
-  const [isLogged,setIsLogged] = useState(false)
-  
-  useEffect(() => {
-   const accessToken = localStorage.getItem('accessToken');
-   if (accessToken) {
-     setIsLogged(true);
-   }
-   
- }, []);
-
+  const isLogged = useContext(UserContext);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,27 +32,32 @@ const TaskForm = () => {
     try {
 
       // enviando imagem
-      const imgName = imgContent.name
-      const type = imgContent.type
-      const urlResponse =  await getURL(imgName,type)
-      const url = urlResponse.data.signedUrl
-      const fileLink = urlResponse.data.fileLink
-      const respImage =  await sendImage(url,imgContent)
-      
-      const content = { title: title, message: description,images: {sort:1,extension:type,path:fileLink}  };
-      await sendPost(userId, userName,content );
+      if (imgContent) {
+
+        const imgName = imgContent.name
+        const type = imgContent.type
+        const urlResponse = await getURL(imgName, type)
+        const url = urlResponse.data.signedUrl
+        const fileLink = urlResponse.data.fileLink
+        const respImage = await sendImage(url, imgContent)
+        const contentWithImage = { title: title, message: description, images: [{ sort: 1, extension: type, path: fileLink }] };
+        await sendPost(userId, userName, contentWithImage);
+
+      } else {
+        const contentWithoutImage = { title: title, message: description };
+        await sendPost(userId, userName, contentWithoutImage);
+      }
       setDescription('');
       setTitle('');
       toast.success('Post adicionado!', { autoClose: 1000 });
     } catch (error) {
-      const filteredError = ErrorFilter.shapingResponse(error.response.status);
-      toast.error('Erro ao adicionar post: ' + filteredError);
+        const filteredError = ErrorFilter.shapingResponse(error.response.status);
+        toast.error('Erro ao adicionar post: ' + filteredError);
     }
   };
 
   const handleFileChange = (event) => {
     setImgContent(event.target.files[0]);
-    console.log(imgContent)
   };
 
   return (

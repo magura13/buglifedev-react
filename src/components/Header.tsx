@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import logo from '../assets/logo.png';
 import { redirect, useNavigate } from 'react-router-dom';
+import UserContext from '../contexts/authProvider.tsx';
 
 type HeaderProps = {
   onLoginClick: () => void;
   onSignUpClick: () => void;
   searchTerm: string;
-  isLogged:boolean
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 };
 
@@ -15,9 +15,9 @@ const Header: React.FC<HeaderProps> = ({
   onSignUpClick,
   searchTerm,
   setSearchTerm,
-  isLogged,
 }) => {
   const navigate = useNavigate();
+  const isLogged = useContext(UserContext);
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken")
