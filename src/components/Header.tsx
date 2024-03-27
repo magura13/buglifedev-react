@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import logo from '../assets/logo.png';
-import { redirect, useNavigate } from 'react-router-dom';
-import UserContext from '../contexts/authProvider.tsx';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/authProvider.tsx';
 
 type HeaderProps = {
   onLoginClick: () => void;
@@ -17,14 +17,10 @@ const Header: React.FC<HeaderProps> = ({
   setSearchTerm,
 }) => {
   const navigate = useNavigate();
-  const isLogged = useContext(UserContext);
+  const {logout,isAuthenticated} = useAuth()
 
   const handleLogout = () => {
-    localStorage.removeItem("accessToken")
-    localStorage.removeItem("userName")
-    localStorage.removeItem("userId")
-    window.location.reload()
-
+    logout()
   }
 
   return (
@@ -48,7 +44,7 @@ const Header: React.FC<HeaderProps> = ({
           <button className="absolute right-0 top-0 mt-2 mr-4"></button>
         </div>
       </div>
-      {!isLogged ? <nav>
+      {!isAuthenticated ? <nav>
         <ul className="flex">
           <li className="ml-6 cursor-pointer" onClick={onLoginClick}>
             login

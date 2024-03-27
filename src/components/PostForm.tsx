@@ -1,5 +1,5 @@
 import React, { useEffect,useContext, useState } from 'react';
-import UserContext from '../contexts/authProvider.tsx';
+import { useAuth } from '../contexts/authProvider.tsx';
 import useCreatePost from '../hooks/userCreatePost.tsx'
 import { toast } from 'react-toastify';
 import { storage } from '../utils/storage.ts';
@@ -13,14 +13,11 @@ const TaskForm = () => {
   const [description, setDescription] = useState('');
   const { isLoading, sendPost } = useCreatePost();
   const { getURL, sendImage } = useCreateImage();
-  const userId = storage.getItem('userId');
-  const userName = storage.getItem('userName');
-  const isLogged = useContext(UserContext);
-
+  const {isAuthenticated,user} = useAuth()
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!isLogged) {
+    if (!isAuthenticated) {
       toast.info('Necessário login')
       return
     }
@@ -41,11 +38,11 @@ const TaskForm = () => {
         const fileLink = urlResponse.data.fileLink
         const respImage = await sendImage(url, imgContent)
         const contentWithImage = { title: title, message: description, images: [{ sort: 1, extension: type, path: fileLink }] };
-        await sendPost(userId, userName, contentWithImage);
+        await sendPost(user.userId, user.userName, contentWithImage);
 
       } else {
         const contentWithoutImage = { title: title, message: description };
-        await sendPost(userId, userName, contentWithoutImage);
+        await sendPost(user.userId, user.userName, contentWithoutImage);
       }
       setDescription('');
       setTitle('');

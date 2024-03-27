@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import useLogin from '../hooks/useLogin.tsx';
 import { toast } from 'react-toastify';
-
+import { useAuth } from '../contexts/authProvider.tsx';
 
 const LoginForm = ({ onClose ,onLoginSuccess}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { performLogin, loading, error } = useLogin();
+  const {login} = useAuth()
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const result = await performLogin(email, password);
+
       if (result && result.accessToken) {
         toast.success('Login bem-sucedido!', {
           onClose: () => {
@@ -19,6 +22,7 @@ const LoginForm = ({ onClose ,onLoginSuccess}) => {
           },
           autoClose: 2000,
         });
+        login(result)
         onLoginSuccess()
       }
     } catch (error) {

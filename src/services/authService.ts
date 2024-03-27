@@ -3,6 +3,8 @@ import DOMPurify from 'dompurify';
 import { LoginCredentials } from '../types/AuthData';
 import { UserCredentials, UserResponse } from '../types/UserData';
 import { storage } from '../utils/storage.ts';
+import { AuthContext, AuthProvider } from '../contexts/authProvider.tsx';
+import { useContext } from 'react';
 
 const API_URL = 'https://api-typescript-express.onrender.com'
 
@@ -20,15 +22,8 @@ const login = async (credentials: LoginCredentials): Promise<LoginResponse> => {
   try {
     const response = await axios.post(`${API_URL}/signin`, credentials);
     const { accessToken, userId, userName } = response.data;
-
-    const sanitizedAccessToken = sanitizeData(accessToken);
-    const sanitizedUserId = sanitizeData(userId);
-    const sanitizedUserName = sanitizeData(userName);
-
-    storage.setItem('accessToken', sanitizedAccessToken);
-    storage.setItem('userId', sanitizedUserId);
-    storage.setItem('userName', sanitizedUserName);
-
+    const userData = { accessToken, userId, userName }
+    
     return { accessToken, userId, userName };
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {

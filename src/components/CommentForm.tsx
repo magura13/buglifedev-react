@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import useCreateComment from '../hooks/useCreateComment.tsx';
 import {ErrorFilter} from '../shared/errorfilter.ts'
-import UserContext from '../contexts/authProvider.tsx';
+import { useAuth } from '../contexts/authProvider.tsx';
 
 
 interface CommentFormProps {
@@ -20,12 +20,12 @@ const CommentForm: React.FC<CommentFormProps> = ({
 }) => {
   const [commentMessage, setCommentMessage] = useState('');
   const { isLoading, sendComment } = useCreateComment();
-  const isLogged = useContext(UserContext);
+  const {isAuthenticated} = useAuth()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!isLogged) {
+    if (!isAuthenticated) {
       toast.info('Necessário login')
       return
     }
