@@ -5,14 +5,23 @@ import { PostData } from '../types/PostData.ts';
 
 interface FeedProps {
   searchTerm: string;
-  isLoggedIn:boolean
+  isLoggedIn: boolean;
+  posts: any;
+  hasMore: boolean;
+  loadMorePosts: any
 }
 
-const Feed: React.FC<FeedProps> = ({ searchTerm,isLoggedIn}) => {
+const Feed: React.FC<FeedProps> = ({
+  searchTerm,
+  isLoggedIn,
+  posts,
+  hasMore,
+  loadMorePosts
+}) => {
+
   const [offset, setOffset] = useState(0);
   const limit = 4;
   const [filteredPosts, setFilteredPosts] = useState<PostData[]>([]);
-  const { posts, hasMore, loadMore } = usePosts(offset, limit);
 
   useEffect(() => {
     const lowercasedFilter = searchTerm.toLowerCase();
@@ -26,11 +35,7 @@ const Feed: React.FC<FeedProps> = ({ searchTerm,isLoggedIn}) => {
     setFilteredPosts(filteredData);
   }, [searchTerm, posts]);
 
-  const loadMorePosts = () => {
-    const newOffset = offset + limit;
-    setOffset(newOffset);
-    loadMore(offset, limit);
-  };
+
 
   return (
     <div className="container mx-auto p-4">
@@ -43,7 +48,7 @@ const Feed: React.FC<FeedProps> = ({ searchTerm,isLoggedIn}) => {
       )}
       {hasMore && (
         <button
-          onClick={loadMorePosts}
+          onClick={() => loadMorePosts()}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           Load More

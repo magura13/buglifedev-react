@@ -3,7 +3,7 @@ import { getPosts } from '../services/forumPosts.ts';
 import { PostData } from '../types/PostData.ts';
 
 const usePosts = (offset, limit) => {
-  const [posts, setPosts] = useState<PostData[]>([]);
+  const [posts, setPosts] = useState([]);
   const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
@@ -17,7 +17,13 @@ const usePosts = (offset, limit) => {
       }
     };
     loadAllPosts();
-  }, []);
+  }, [posts]);
+
+  function  addNewPost (newPost) {
+    setPosts((prevPosts) => [...prevPosts, newPost]);
+  };
+
+
   const loadMore = async (newOffset, newLimit) => {
     try {
       const fetchedPosts = await getPosts(newOffset, newLimit);
@@ -28,7 +34,7 @@ const usePosts = (offset, limit) => {
     }
   };
 
-  return { posts, hasMore, loadMore };
+  return { posts, hasMore, loadMore, setPosts ,addNewPost};
 };
 
 export default usePosts;

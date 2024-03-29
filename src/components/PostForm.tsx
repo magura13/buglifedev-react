@@ -1,19 +1,28 @@
-import React, { useEffect,useContext, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useAuth } from '../contexts/authProvider.tsx';
 import useCreatePost from '../hooks/userCreatePost.tsx'
 import { toast } from 'react-toastify';
-import { storage } from '../utils/storage.ts';
 import { ErrorFilter } from '../shared/errorfilter.ts'
 
 import useCreateImage from '../hooks/useCreateImage.tsx';
+import usePosts from '../hooks/usePosts.tsx';
 
-const TaskForm = () => {
+interface PostFormProps {
+  addNewPost: any
+}
+
+
+const TaskForm: React.FC<PostFormProps> = ({
+  addNewPost
+}
+) => {
   const [title, setTitle] = useState('');
   const [imgContent, setImgContent] = useState('');
   const [description, setDescription] = useState('');
   const { isLoading, sendPost } = useCreatePost();
   const { getURL, sendImage } = useCreateImage();
-  const {isAuthenticated,user} = useAuth()
+  const { isAuthenticated, user } = useAuth()
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -38,18 +47,26 @@ const TaskForm = () => {
         const fileLink = urlResponse.data.fileLink
         const respImage = await sendImage(url, imgContent)
         const contentWithImage = { title: title, message: description, images: [{ sort: 1, extension: type, path: fileLink }] };
-        await sendPost(user.userId, user.userName, contentWithImage);
+
+        const response = await sendPost(user.userId, user.userName, contentWithImage);
+        const newPost = response.response.forumPost
+        // const newPost = { user, contentWithImage }
+        addNewPost(newPost)
 
       } else {
         const contentWithoutImage = { title: title, message: description };
-        await sendPost(user.userId, user.userName, contentWithoutImage);
+
+        const response = await sendPost(user.userId, user.userName, contentWithoutImage);
+        const newPost = response.response.forumPost
+        // const newPost = { user, contentWithoutImage }
+        addNewPost(newPost)
       }
       setDescription('');
       setTitle('');
       toast.success('Post adicionado!', { autoClose: 1000 });
     } catch (error) {
-        const filteredError = ErrorFilter.shapingResponse(error.response.status);
-        toast.error('Erro ao adicionar post: ' + filteredError);
+      const filteredError = ErrorFilter.shapingResponse(error.response.status);
+      toast.error('Erro ao adicionar post: ' + filteredError);
     }
   };
 

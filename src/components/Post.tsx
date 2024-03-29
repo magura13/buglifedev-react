@@ -56,14 +56,14 @@ const Post = ({ data,isLoggedIn }) => {
         </p>
       </div>
       <h3 className="font-bold text-custom-blue text-xl my-1 ">
-        {data.content.title}
+        {data.content?.title}
       </h3>
-      {data.content.images.length > 0 ?
-      <img className='size-96 self-center ' src={data.content.images[0].path}></img> 
+      {data.content?.images.length > 0 ?
+      <img className='size-96 self-center ' src={data.content?.images[0].path}></img> 
       : <></>
       }
         
-      <p className="text-gray-700 text-sm">{data.content.message}</p>
+      <p className="text-gray-700 text-sm">{data.content?.message}</p>
       <div className="display: flex justify-between mt-2">
         <p
           onClick={handleLike}
@@ -86,7 +86,6 @@ const Post = ({ data,isLoggedIn }) => {
         userId={userId}
         userName={userName}
         onCommentAdded={addNewComment}
-        isLoggedIn={isLoggedIn}
       />
     </div>
   );
