@@ -20,6 +20,13 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(true);
   };
 
+  const checkIfIsAuthenticated = () => {
+    if(!storage.getItem('accessToken')) {
+      setIsAuthenticated(false);
+    }
+    setIsAuthenticated(true);
+  }
+
   const logout = () => {
     // Remove user information and set authentication status to false
     setUser(null);
@@ -30,7 +37,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated,checkIfIsAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

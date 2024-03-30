@@ -10,31 +10,20 @@ const usePosts = (offset, limit) => {
     const loadAllPosts = async () => {
       try {
         const fetchedPosts = await getPosts(offset, limit);
-        setPosts(fetchedPosts.data);
+        setPosts([...posts, ...fetchedPosts.data]);
         setHasMore(fetchedPosts.hasMore);
       } catch (error) {
         console.error('Erro ao buscar posts:', error);
       }
     };
     loadAllPosts();
-  }, [posts]);
+  }, [offset, limit]);
 
   function  addNewPost (newPost) {
     setPosts((prevPosts) => [...prevPosts, newPost]);
   };
 
-
-  const loadMore = async (newOffset, newLimit) => {
-    try {
-      const fetchedPosts = await getPosts(newOffset, newLimit);
-      setPosts([...posts, ...fetchedPosts.data]);
-      setHasMore(fetchedPosts.hasMore);
-    } catch (error) {
-      console.error('Erro ao buscar mais posts:', error);
-    }
-  };
-
-  return { posts, hasMore, loadMore, setPosts ,addNewPost};
+  return { posts, hasMore,setPosts ,addNewPost};
 };
 
 export default usePosts;

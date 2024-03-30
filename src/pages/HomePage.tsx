@@ -12,12 +12,11 @@ interface HomePageProps {
 const HomePage: React.FC<HomePageProps> = ({ searchTerm, isLogged }) => {
   const limit = 4
   const [offset, setOffset] = useState(0);
-  const { posts, hasMore, loadMore, addNewPost} = usePosts(offset, limit);
+  const { posts, hasMore, addNewPost} = usePosts(offset, limit);
 
   const loadMorePosts = () => {
     const newOffset = offset + limit;
     setOffset(newOffset);
-    loadMore(offset, limit);
   };
 
  

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import logo from '../assets/logo.png';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/authProvider.tsx';
 
 type HeaderProps = {
@@ -16,8 +15,10 @@ const Header: React.FC<HeaderProps> = ({
   searchTerm,
   setSearchTerm,
 }) => {
-  const navigate = useNavigate();
-  const {logout,isAuthenticated} = useAuth()
+
+  const {logout,isAuthenticated, checkIfIsAuthenticated} = useAuth()
+
+  checkIfIsAuthenticated()
 
   const handleLogout = () => {
     logout()
@@ -34,7 +35,7 @@ const Header: React.FC<HeaderProps> = ({
         <div className="relative">
           <input
             type="search"
-            className="w-2/4 px-4 py-2 rounded-lg text-gray-700 focus:outline-none placeholder-white"
+            className="w-2/4 px-4 py-2 rounded-lg text-gray-700 focus:outline-none placeholder-grey"
             placeholder="Faça sua pesquisa :)"
             value={searchTerm}
             onChange={(e) => {
