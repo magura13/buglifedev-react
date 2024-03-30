@@ -20,7 +20,7 @@ const usePosts = (offset, limit) => {
   }, [offset, limit]);
 
   function  addNewPost (newPost) {
-    setPosts((prevPosts) => [...prevPosts, newPost]);
+    setPosts((prevPosts) => [newPost,...prevPosts ]);
   };
 
   return { posts, hasMore,setPosts ,addNewPost};

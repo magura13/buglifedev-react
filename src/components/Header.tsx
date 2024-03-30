@@ -18,7 +18,9 @@ const Header: React.FC<HeaderProps> = ({
 
   const {logout,isAuthenticated, checkIfIsAuthenticated} = useAuth()
 
-  checkIfIsAuthenticated()
+  useEffect(() => {
+    checkIfIsAuthenticated()
+  }, []);
 
   const handleLogout = () => {
     logout()

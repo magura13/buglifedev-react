@@ -13,7 +13,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = (userData) => {
     // Authenticate user and set user information and authentication status
-    storage.setItem('accessToken',userData.accessToken);
+    storage.setItem('accessToken', userData.accessToken);
+
     storage.setItem('userId', userData.userId);
     storage.setItem('userName', userData.userName);
     setUser(userData);
@@ -21,10 +22,20 @@ export const AuthProvider = ({ children }) => {
   };
 
   const checkIfIsAuthenticated = () => {
-    if(!storage.getItem('accessToken')) {
+    if (!storage.getItem('accessToken')) {
       setIsAuthenticated(false);
+    } else {
+      setIsAuthenticated(true);
+      const accessToken = storage.getItem('accessToken');
+      const userId = storage.getItem('userId');
+      const userName = storage.getItem('userName');
+      setUser({
+        accessToken,
+        userId,
+        userName
+      })
     }
-    setIsAuthenticated(true);
+
   }
 
   const logout = () => {
@@ -37,7 +48,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated,checkIfIsAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, checkIfIsAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
