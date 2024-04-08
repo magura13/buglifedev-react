@@ -2,11 +2,10 @@ import axios from 'axios';
 import DOMPurify from 'dompurify';
 import { LoginCredentials } from '../types/AuthData';
 import { UserCredentials, UserResponse } from '../types/UserData';
-import { storage } from '../utils/storage.ts';
-import { AuthContext, AuthProvider } from '../contexts/authProvider.tsx';
-import { useContext } from 'react';
+import apiInstance from './refreshTokenService.ts';
 
-const API_URL = 'https://api-typescript-express.onrender.com'
+
+const API_URL = process.env.REACT_APP_API_URL
 
 interface LoginResponse {
   accessToken: string;
@@ -20,7 +19,7 @@ const sanitizeData = (data: string): string => {
 
 const login = async (credentials: LoginCredentials): Promise<LoginResponse> => {
   try {
-    const response = await axios.post(`${API_URL}/signin`, credentials);
+    const response = await apiInstance.post(`/signin`, credentials);
     const { accessToken, userId, userName } = response.data;
     const userData = { accessToken, userId, userName }
     
@@ -43,7 +42,7 @@ const register = async (
 ): Promise<UserResponse> => {
   let errorMessage = 'Erro desconhecido ao fazer o cadastro.';
   try {
-    const response = await axios.post(`${API_URL}/user`, credentials);
+    const response = await apiInstance.post(`/user`, credentials);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {

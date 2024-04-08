@@ -1,6 +1,6 @@
 import axios from 'axios';
+import apiInstance from './refreshTokenService.ts';
 
-const API_URL = 'https://api-typescript-express.onrender.com'
 
 
 export const getServiceUrl = async (
@@ -9,8 +9,8 @@ export const getServiceUrl = async (
 ) => {
   // const token = storage.getItem('accessToken');
   try {
-    const response = await axios.post(
-      `${API_URL}/api/s3/signed_url`,
+    const response = await apiInstance.post(
+      `/api/s3/signed_url`,
       { key:imgName,content_type:contentType },
       // { headers: { Authorization: `Bearer ${token}` } }
     );

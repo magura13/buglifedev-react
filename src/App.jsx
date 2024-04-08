@@ -44,7 +44,7 @@ function App() {
               onSignUpClick={handleSignUpClick}
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
-              isLogged={isLogged}
+              // isLogged={isLogged}
             />
             <Modal isOpen={isModalOpen} onClose={closeModal}>
               {modalContent === 'login' ? (

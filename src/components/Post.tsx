@@ -6,6 +6,7 @@ import useCreateLike from '../hooks/useCreateLike.tsx';
 import { LikeData } from '../types/LikeData.ts';
 import { toast } from 'react-toastify';
 import { ErrorFilter } from '../shared/errorfilter.ts';
+import { useAuth } from '../contexts/authProvider.tsx';
 
 const Post = ({ data,isLoggedIn }) => {
   const formattedDate = formatDateTime(data.createdAt);
@@ -15,6 +16,7 @@ const Post = ({ data,isLoggedIn }) => {
   const userId = localStorage.getItem('userId')?.toString();
   const [comments, setComments] = useState(data.comments);
   const { sendLike, isLoading, error } = useCreateLike();
+  const {isAuthenticated} = useAuth()
 
 
   const addNewComment = (newComment) => {
@@ -24,7 +26,7 @@ const Post = ({ data,isLoggedIn }) => {
   const handleLike = async () => {
 
     try {
-      if (!isLoggedIn) {
+      if (!isAuthenticated) {
         toast.info('Necessário login')
         return
       }

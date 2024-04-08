@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { storage } from '../utils/storage.ts';
 
-const API_URL = 'https://api-typescript-express.onrender.com';
+import { storage } from '../utils/storage.ts';
+import apiInstance from './refreshTokenService.ts';
+
 
 export const createComment = async (
   postId: string | null,
@@ -10,8 +10,8 @@ export const createComment = async (
   message: string
 ): Promise<any> => {
   const token = storage.getItem('accessToken');
-  const response = await axios.post(
-    `${API_URL}/forumpost/${postId}/comments`,
+  const response = await apiInstance.post(
+    `/forumpost/${postId}/comments`,
     { userId, userName, message },
     { headers: { Authorization: `Bearer ${token}` } }
   );
@@ -23,8 +23,8 @@ export const deleteComment = async (
   forumPostId: string | null
 ): Promise<any> => {
   const token = storage.getItem('accessToken');
-  const response = await axios.delete(
-    `${API_URL}/comments/${forumPostId}/${commentId}`,
+  const response = await apiInstance.delete(
+    `/comments/${forumPostId}/${commentId}`,
     { headers: { Authorization: `Bearer ${token}` } }
   );
   return response.data;

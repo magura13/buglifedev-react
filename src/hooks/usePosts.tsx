@@ -19,11 +19,11 @@ const usePosts = (offset, limit) => {
     loadAllPosts();
   }, [offset, limit]);
 
-  function  addNewPost (newPost) {
-    setPosts((prevPosts) => [newPost,...prevPosts ]);
+  function addNewPost(newPost) {
+    setPosts((prevPosts) => [newPost, ...prevPosts]);
   };
 
-  return { posts, hasMore,setPosts ,addNewPost};
+  return { posts, hasMore, setPosts, addNewPost };
 };
 
 export default usePosts;
