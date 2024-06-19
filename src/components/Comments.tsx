@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import useDeleteComment from '../hooks/useDeleteComment.tsx';
 
 const Comments = ({ data, forumPostId }) => {
   const { deleteCommentAction, isLoading, error } = useDeleteComment();
+
+  const userId = localStorage.getItem("userId");
+  
+  const isFromUser = userId === data.userId;
 
   const handleDelete = async (commentId, forumPostId) => {
     try {
@@ -20,13 +24,16 @@ const Comments = ({ data, forumPostId }) => {
         <p className="text-gray-700 text-xxs">{data.message}</p>
       </div>
       <div>
+        {isFromUser ?
         <button
-          onClick={() => handleDelete(data._id, forumPostId)}
-          type="submit"
-          className="mt-3 bg-red-500 hover:bg-red-700 text-white font text-xxs self-start py-0.00005 px-1 rounded"
-        >
-          Deletar
-        </button>
+        onClick={() => handleDelete(data._id, forumPostId)}
+        type="submit"
+        className="mt-3 bg-red-500 hover:bg-red-700 text-white font text-xxs self-start py-0.00005 px-1 rounded"
+      >
+        Deletar
+      </button>
+      : null
+      }
       </div>
     </div>
   );
