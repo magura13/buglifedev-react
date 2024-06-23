@@ -3,6 +3,7 @@ import Feed from '../components/Feed.tsx';
 import NewsFeed from '../components/NewsFeed.tsx';
 import PostForm from '../components/PostForm.tsx';
 import usePosts from '../hooks/usePosts.tsx';
+import { useAuth } from '../contexts/authProvider.tsx';
 
 interface HomePageProps {
   searchTerm: string;
@@ -12,26 +13,27 @@ interface HomePageProps {
 const HomePage: React.FC<HomePageProps> = ({ searchTerm, isLogged }) => {
   const limit = 4
   const [offset, setOffset] = useState(0);
-  const { posts, hasMore, addNewPost} = usePosts(offset, limit);
+  const { posts, hasMore, addNewPost } = usePosts(offset, limit);
+  const { isAuthenticated } = useAuth();
 
   const loadMorePosts = () => {
     const newOffset = offset + limit;
     setOffset(newOffset);
   };
 
- 
+
   return (
     <div className="container mx-auto p-4">
       <div className="grid md:grid-cols-3 ">
         <div className="md:col-span-2 mx-5 pl-40">
-          <PostForm addNewPost={addNewPost}/>
-          <Feed 
-          searchTerm={searchTerm} 
-          isLoggedIn={isLogged} 
-          posts={posts}
-          hasMore={hasMore}
-          loadMorePosts={loadMorePosts}
-           />
+          {isAuthenticated && <PostForm addNewPost={addNewPost} />}
+          <Feed
+            searchTerm={searchTerm}
+            isLoggedIn={isLogged}
+            posts={posts}
+            hasMore={hasMore}
+            loadMorePosts={loadMorePosts}
+          />
         </div>
         <div className="mclera
         d:col-span-1 mx-5 pr-40">

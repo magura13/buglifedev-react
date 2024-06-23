@@ -10,7 +10,13 @@ const usePosts = (offset, limit) => {
     const loadAllPosts = async () => {
       try {
         const fetchedPosts = await getPosts(offset, limit);
-        setPosts([...posts, ...fetchedPosts.data]);
+        
+        if (Array.isArray(fetchedPosts.forumPosts)) {
+          setPosts([...posts, ...fetchedPosts.forumPosts]);
+        } else {
+          console.error('fetchedPosts.forumPosts is not an array:', fetchedPosts.forumPosts);
+        }
+        
         setHasMore(fetchedPosts.hasMore);
       } catch (error) {
         console.error('Erro ao buscar posts:', error);
@@ -21,7 +27,7 @@ const usePosts = (offset, limit) => {
 
   function addNewPost(newPost) {
     setPosts((prevPosts) => [newPost, ...prevPosts]);
-  };
+  }
 
   return { posts, hasMore, setPosts, addNewPost };
 };

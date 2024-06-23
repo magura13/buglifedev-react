@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const login = (userData) => {
-    // Authenticate user and set user information and authentication status
     storage.setItem('accessToken', userData.accessToken);
 
     storage.setItem('userId', userData.userId);
@@ -39,7 +38,6 @@ export const AuthProvider = ({ children }) => {
   }
 
   const logout = () => {
-    // Remove user information and set authentication status to false
     setUser(null);
     storage.removeItem('accessToken');
     storage.removeItem('userId');

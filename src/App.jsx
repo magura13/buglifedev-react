@@ -12,12 +12,11 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './contexts/authProvider.tsx';
 
-
 function App() {
   const { isModalOpen, openModal, closeModal } = useModal();
   const [modalContent, setModalContent] = useState('login');
   const [searchTerm, setSearchTerm] = useState('');
-  const [isLogged,setIsLogged] = useState(false)
+  const [isLogged, setIsLogged] = useState(false);
 
   const handleLoginSuccess = () => {
     setIsLogged(true);
@@ -37,27 +36,28 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-          <div className="App">
-            <ToastContainer />
-            <Header
-              onLoginClick={handleLoginClick}
-              onSignUpClick={handleSignUpClick}
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              // isLogged={isLogged}
-            />
-            <Modal isOpen={isModalOpen} onClose={closeModal}>
-              {modalContent === 'login' ? (
-                <LoginForm onClose={closeModal} onLoginSuccess={handleLoginSuccess} />
-              ) : (
-                <SignUpForm onClose={closeModal} />
-              )}
-            </Modal>
+        <div className="App">
+          <ToastContainer />
+          <Header
+            onLoginClick={handleLoginClick}
+            onSignUpClick={handleSignUpClick}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+          />
+          <Modal isOpen={isModalOpen} onClose={closeModal}>
+            {modalContent === 'login' ? (
+              <LoginForm onClose={closeModal} onLoginSuccess={handleLoginSuccess} />
+            ) : (
+              <SignUpForm onClose={closeModal} />
+            )}
+          </Modal>
+          <main>
             <Routes>
-              <Route path="/" element={<HomePage searchTerm={searchTerm} isLogged={isLogged}  />} />{' '}
+              <Route path="/" element={<HomePage searchTerm={searchTerm} isLogged={isLogged} />} />{' '}
             </Routes>
-            <Footer />
-          </div>
+          </main>
+          <Footer />
+        </div>
       </AuthProvider>
     </Router>
   );

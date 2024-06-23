@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { ErrorFilter } from '../shared/errorfilter.ts';
 import { useAuth } from '../contexts/authProvider.tsx';
 
-const Post = ({ data,isLoggedIn }) => {
+const Post = ({ data, isLoggedIn }) => {
   const formattedDate = formatDateTime(data.createdAt);
   const [showComments, setShowComments] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -16,35 +16,32 @@ const Post = ({ data,isLoggedIn }) => {
   const userId = localStorage.getItem('userId')?.toString();
   const [comments, setComments] = useState(data.comments);
   const { sendLike, isLoading, error } = useCreateLike();
-  const {isAuthenticated} = useAuth()
-
+  const { isAuthenticated } = useAuth();
 
   const addNewComment = (newComment) => {
     setComments((prevComments) => [...prevComments, newComment]);
   };
 
   const handleLike = async () => {
-
     try {
       if (!isAuthenticated) {
-        toast.info('Necessário login')
-        return
+        toast.info('Necessário login');
+        return;
       }
-      const forumPostId = data?._id
-      const likeData: LikeData = { forumPostId, userId }
-      await sendLike(likeData)
+      const forumPostId = data?._id;
+      const likeData: LikeData = { forumPostId, userId };
+      await sendLike(likeData);
       toast.success('Post curtido :)', { autoClose: 1000 });
-
     } catch (err) {
       const filteredError = ErrorFilter.shapingResponse(err.response.status);
       toast.info(filteredError);
-
     }
-  }
+  };
 
   const handleCommentClick = () => {
     setShowComments(!showComments);
-  }
+  };
+
   return (
     <div className="rounded overflow-hidden shadow-lg p-4 mb-6 text-left flex flex-col">
       <div className="display: flex">
@@ -60,19 +57,19 @@ const Post = ({ data,isLoggedIn }) => {
       <h3 className="font-bold text-custom-blue text-xl my-1 ">
         {data.content?.title}
       </h3>
-      {data.content?.images.length > 0 ?
-      <img className='size-96 self-center ' src={data.content?.images[0].path}></img> 
-      : <></>
-      }
-        
+      {data.content?.images.length > 0 ? (
+        <img className="size-96 self-center" src={data.content?.images[0].path} />
+      ) : (
+        <></>
+      )}
       <p className="text-gray-700 text-sm">{data.content?.message}</p>
       <div className="display: flex justify-between mt-2">
-        <p
-          onClick={handleLike}
-          className="text-red-500 cursor-pointer">❤️ Like</p>
+        {/* <p onClick={handleLike} className="text-red-500 cursor-pointer">
+          ❤️ Like
+        </p> */}
         <div className="display: flex justify-end">
           <p
-            className="text-gray-700 text-sm mr-1  hover:underline hover:text-custom-blue cursor-pointer"
+            className="text-gray-700 text-sm mr-1 hover:underline hover:text-custom-blue cursor-pointer"
             onClick={handleCommentClick}
           >
             {data.comments.length} comentários
@@ -83,15 +80,16 @@ const Post = ({ data,isLoggedIn }) => {
         comments.map((comment, forumPostId) => (
           <Comments key={comment.id} data={comment} forumPostId={data._id} />
         ))}
-      <CommentForm
-        postId={data._id}
-        userId={userId}
-        userName={userName}
-        onCommentAdded={addNewComment}
-      />
+      {isAuthenticated && (
+        <CommentForm
+          postId={data._id}
+          userId={userId}
+          userName={userName}
+          onCommentAdded={addNewComment}
+        />
+      )}
     </div>
   );
-}
-
+};
 
 export default Post;

@@ -35,12 +35,12 @@ const Feed: React.FC<FeedProps> = ({
     setFilteredPosts(filteredData);
   }, [searchTerm, posts]);
 
-
-
   return (
     <div className="container mx-auto p-4">
       {filteredPosts.length > 0 ? (
-        filteredPosts.map((post) => <Post data={post} isLoggedIn={isLoggedIn} />)
+        filteredPosts.map((post) => (
+          <Post key={post._id} data={post} isLoggedIn={isLoggedIn} />
+        ))
       ) : (
         <p className="text-center text-gray-600">
           Não há postagens para mostrar.

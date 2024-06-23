@@ -16,7 +16,7 @@ const Header: React.FC<HeaderProps> = ({
   setSearchTerm,
 }) => {
 
-  const {logout,isAuthenticated, checkIfIsAuthenticated} = useAuth()
+  const { logout, isAuthenticated, checkIfIsAuthenticated } = useAuth()
 
 
   useEffect(() => {
@@ -51,22 +51,22 @@ const Header: React.FC<HeaderProps> = ({
       {!isAuthenticated ? <nav>
         <ul className="flex">
           <li className="ml-6 cursor-pointer" onClick={onLoginClick}>
-            login
+            Login
           </li>
           <li className="ml-6 cursor-pointer" onClick={onSignUpClick}>
-            cadastre
+            Cadastre-se
           </li>
         </ul>
-      </nav> : 
-      <nav>
-      <ul className="flex">
-        <li className="ml-6 cursor-pointer" onClick={handleLogout}>
-          logout
-        </li>
-      </ul>
-    </nav>
+      </nav> :
+        <nav>
+          <ul className="flex">
+            <li className="ml-6 cursor-pointer" onClick={handleLogout}>
+              Logout
+            </li>
+          </ul>
+        </nav>
       }
-      
+
     </header>
   );
 };
