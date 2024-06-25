@@ -35,7 +35,7 @@ const Header: React.FC<HeaderProps> = ({
         className="h-14 w-14 rounded-full hover:scale-125 transition-transform duration-300"
       />
       <div className="flex-grow mx-4">
-        <div className="relative">
+        <div className="relative flex justify-center">
           <input
             type="search"
             className="w-2/4 px-4 py-2 rounded-lg text-gray-700 focus:outline-none placeholder-grey"
