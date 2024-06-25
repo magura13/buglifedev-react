@@ -36,7 +36,7 @@ const Feed: React.FC<FeedProps> = ({
   }, [searchTerm, posts]);
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="mx-auto p-4 flex-col ">
       {filteredPosts.length > 0 ? (
         filteredPosts.map((post) => (
           <Post key={post._id} data={post} isLoggedIn={isLoggedIn} />
@@ -46,14 +46,16 @@ const Feed: React.FC<FeedProps> = ({
           Não há postagens para mostrar.
         </p>
       )}
+      <div className='flex justify-center'>
       {hasMore && (
         <button
           onClick={() => loadMorePosts()}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded self-center"
         >
-          Load More
+          Carregar mais
         </button>
       )}
+      </div>
     </div>
   );
 };

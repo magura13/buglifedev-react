@@ -68,7 +68,7 @@ const LoginForm = ({ onClose ,onLoginSuccess}) => {
         type="submit"
         disabled={loading}
       >
-        Login
+        {loading ? 'Logando...' : 'Entrar'}
       </button>
       {error && <p>{error}</p>}
     </form>
