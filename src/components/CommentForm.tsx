@@ -1,9 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import useCreateComment from '../hooks/useCreateComment.tsx';
-import {ErrorFilter} from '../shared/errorfilter.ts'
+import { ErrorFilter } from '../shared/errorfilter.ts';
 import { useAuth } from '../contexts/authProvider.tsx';
-
 
 interface CommentFormProps {
   postId: string | null;
@@ -20,14 +19,14 @@ const CommentForm: React.FC<CommentFormProps> = ({
 }) => {
   const [commentMessage, setCommentMessage] = useState('');
   const { isLoading, sendComment } = useCreateComment();
-  const {isAuthenticated} = useAuth()
+  const { isAuthenticated } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!isAuthenticated) {
-      toast.info('Necessário login')
-      return
+      toast.info('Necessário login');
+      return;
     }
     if (!commentMessage.trim()) {
       toast.error('O comentário não pode estar vazio.');
@@ -47,7 +46,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
   return (
     <form onSubmit={handleSubmit} className="mt-4">
       <textarea
-        className="w-full h-10 p-2 text-sm text-gray-700 border rounded-lg focus:outline-none"
+        className="w-full h-24 p-2 text-sm text-gray-700 border rounded-lg focus:outline-none"
         rows={3}
         placeholder="Adicione um comentário..."
         value={commentMessage}

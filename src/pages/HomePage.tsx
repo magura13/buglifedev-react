@@ -15,19 +15,39 @@ const HomePage: React.FC<HomePageProps> = ({ searchTerm, isLogged }) => {
   const [offset, setOffset] = useState(0);
   const { posts, hasMore, addNewPost } = usePosts(offset, limit);
   const { isAuthenticated } = useAuth();
+  const [showForm, setShowForm] = useState(false);
 
   const loadMorePosts = () => {
     const newOffset = offset + limit;
     setOffset(newOffset);
   };
 
+  const toggleForm = () => {
+    setShowForm(!showForm);
+  };
+
   return (
     <div className="container mx-auto p-4">
+      <div className="md:hidden mb-4">
+        {isAuthenticated && (
+          <button
+            onClick={toggleForm}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
+          >
+            <span className="mr-2">{showForm ? '-' : '+'}</span>
+            Postar
+          </button>
+        )}
+        {showForm && <PostForm addNewPost={addNewPost} />}
+      </div>
       <div className="md:grid md:grid-cols-12 gap-4">
-        <div className="col-span-2">
-        </div>
+        <div className="col-span-2"></div>
         <div className="col-span-8">
-          {isAuthenticated && <PostForm addNewPost={addNewPost} />}
+          {isAuthenticated && (
+            <div className="hidden md:block">
+              <PostForm addNewPost={addNewPost} />
+            </div>
+          )}
           <Feed
             searchTerm={searchTerm}
             isLoggedIn={isLogged}

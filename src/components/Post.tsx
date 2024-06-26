@@ -46,14 +46,14 @@ const Post = ({ data, isLoggedIn }) => {
     <div className="rounded overflow-hidden shadow-lg p-4 mb-6 flex flex-col">
       <div className="flex flex-row items-start md:items-center mb-2 md:mb-0 justify-between">
         <div className="flex flex-row">
-          <p className="text-gray-700 text-xxs mr-1">Criado por:</p>
-          <p className="text-custom-blue text-xs text-xxs font-semibold mr-1">
+          <p className="text-gray-700 text-xxs mr-1 whitespace-nowrap">Criado por:</p>
+          <p className="text-custom-blue text-xs text-xxs font-semibold mr-1 whitespace-nowrap">
             {data.userName}
           </p>
         </div>
         <div className="flex flex-row">
-          <p className="text-gray-700 text-xxs mr-1">Postado em</p>
-          <p className="text-custom-blue text-xxs font-semibold">
+          <p className="text-gray-700 text-xxs mr-1 whitespace-nowrap">Postado em</p>
+          <p className="text-custom-blue text-xxs font-semibold whitespace-nowrap">
             {formattedDate}
           </p>
         </div>
@@ -76,7 +76,7 @@ const Post = ({ data, isLoggedIn }) => {
 
       <div className="flex justify-end my-2">
         <p
-          className="text-gray-700 text-sm mr-1 hover:underline hover:text-custom-blue cursor-pointer"
+          className="text-gray-700 text-xs md:text-sm mr-1 hover:underline hover:text-custom-blue cursor-pointer"
           onClick={handleCommentClick}
         >
           {data.comments.length} comentários
