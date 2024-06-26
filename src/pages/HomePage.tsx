@@ -11,7 +11,7 @@ interface HomePageProps {
 }
 
 const HomePage: React.FC<HomePageProps> = ({ searchTerm, isLogged }) => {
-  const limit = 4
+  const limit = 4;
   const [offset, setOffset] = useState(0);
   const { posts, hasMore, addNewPost } = usePosts(offset, limit);
   const { isAuthenticated } = useAuth();
@@ -21,11 +21,12 @@ const HomePage: React.FC<HomePageProps> = ({ searchTerm, isLogged }) => {
     setOffset(newOffset);
   };
 
-
   return (
     <div className="container mx-auto p-4">
-      <div className="grid md:grid-cols-3 ">
-        <div className="md:col-span-2 mx-5 pl-40">
+      <div className="md:grid md:grid-cols-12 gap-4">
+        <div className="col-span-2">
+        </div>
+        <div className="col-span-8">
           {isAuthenticated && <PostForm addNewPost={addNewPost} />}
           <Feed
             searchTerm={searchTerm}
@@ -35,8 +36,7 @@ const HomePage: React.FC<HomePageProps> = ({ searchTerm, isLogged }) => {
             loadMorePosts={loadMorePosts}
           />
         </div>
-        <div className="mclera
-        d:col-span-1 mx-5 pr-40">
+        <div className="col-span-2">
           <NewsFeed />
         </div>
       </div>

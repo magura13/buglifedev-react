@@ -8,6 +8,7 @@ module.exports = {
       },
       fontSize: {
         xxs: '0.70rem',
+        xxxs: '0.50rem',
       },
     },
   },
