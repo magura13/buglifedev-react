@@ -13,13 +13,17 @@ const Post = ({ data, isLoggedIn }) => {
   const [showComments, setShowComments] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const userName = localStorage.getItem('userName');
-  const userId = localStorage.getItem('userId')?.toString();
+  const [userId, setUserId] = useState(localStorage.getItem('userId')?.toString());
   const [comments, setComments] = useState(data.comments);
   const { sendLike, isLoading, error } = useCreateLike();
   const { isAuthenticated } = useAuth();
 
   const addNewComment = (newComment) => {
     setComments((prevComments) => [...prevComments, newComment]);
+  };
+
+  const removeComment = (commentId) => {
+    setComments((prevComments) => prevComments.filter(comment => comment._id !== commentId));
   };
 
   const handleLike = async () => {
@@ -79,13 +83,18 @@ const Post = ({ data, isLoggedIn }) => {
           className="text-gray-700 text-xs md:text-sm mr-1 hover:underline hover:text-custom-blue cursor-pointer"
           onClick={handleCommentClick}
         >
-          {data.comments.length} comentários
+          {comments.length} comentários
         </p>
       </div>
 
       {showComments &&
         comments.map((comment, index) => (
-          <Comments key={index} data={comment} forumPostId={data._id} />
+          <Comments
+            key={index}
+            data={comment}
+            onCommentDeleted={removeComment}
+            forumPostId={data._id}
+          />
         ))}
       {isAuthenticated && (
         <CommentForm

@@ -3,6 +3,9 @@ import { toast } from 'react-toastify';
 import useCreateComment from '../hooks/useCreateComment.tsx';
 import { ErrorFilter } from '../shared/errorfilter.ts';
 import { useAuth } from '../contexts/authProvider.tsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faComment } from '@fortawesome/free-solid-svg-icons';
+
 
 interface CommentFormProps {
   postId: string | null;
@@ -55,10 +58,11 @@ const CommentForm: React.FC<CommentFormProps> = ({
       />
       <button
         type="submit"
-        className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="bg-blue-500 hover:bg-blue-700 text-xxxs text-white font-bold py-2 px-2 rounded-full h-12 w-12 flex items-center justify-center"
         disabled={isLoading}
       >
-        {isLoading ? 'Comentando...' : 'Comentar'}
+        <FontAwesomeIcon icon={faComment} style={{color: "#ffffff"}} />
+        {isLoading ? 'Enviando' : 'Comentar'}
       </button>
     </form>
   );

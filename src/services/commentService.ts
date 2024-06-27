@@ -20,11 +20,12 @@ export const createComment = async (
 
 export const deleteComment = async (
   commentId: string | null,
-  forumPostId: string | null
+  forumPostId: string | null,
+  userId:string | null
 ): Promise<any> => {
   const token = storage.getItem('accessToken');
   const response = await apiInstance.delete(
-    `/comments/${forumPostId}/${commentId}`,
+    `/comments/${forumPostId}/${commentId}/${userId}`,
     { headers: { Authorization: `Bearer ${token}` } }
   );
   return response.data;

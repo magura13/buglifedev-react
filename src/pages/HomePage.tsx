@@ -4,6 +4,8 @@ import NewsFeed from '../components/NewsFeed.tsx';
 import PostForm from '../components/PostForm.tsx';
 import usePosts from '../hooks/usePosts.tsx';
 import { useAuth } from '../contexts/authProvider.tsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 interface HomePageProps {
   searchTerm: string;
@@ -28,24 +30,23 @@ const HomePage: React.FC<HomePageProps> = ({ searchTerm, isLogged }) => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="md:hidden mb-4">
+      <div className="mb-4 flex flex-col justify-center items-center ">
         {isAuthenticated && (
           <button
             onClick={toggleForm}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded-full h-12 w-12 flex items-center justify-center"
           >
-            <span className="mr-2">{showForm ? '-' : '+'}</span>
-            Postar
+            <FontAwesomeIcon icon={showForm ? faMinus : faPlus} />
           </button>
         )}
-        {showForm && <PostForm addNewPost={addNewPost} />}
+        {showForm && <div className ="md:hidden lg:hidden"><PostForm  addNewPost={addNewPost} /></div>}
       </div>
       <div className="md:grid md:grid-cols-12 gap-4">
         <div className="col-span-2"></div>
         <div className="col-span-8">
           {isAuthenticated && (
             <div className="hidden md:block">
-              <PostForm addNewPost={addNewPost} />
+              {showForm && <PostForm addNewPost={addNewPost} />}
             </div>
           )}
           <Feed

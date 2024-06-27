@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import useDeleteComment from '../hooks/useDeleteComment.tsx';
 
-const Comments = ({ data, forumPostId }) => {
+const Comments = ({ data, forumPostId, onCommentDeleted }) => {
   const { deleteCommentAction, isLoading, error } = useDeleteComment();
 
   const userId = localStorage.getItem("userId");
@@ -11,8 +11,9 @@ const Comments = ({ data, forumPostId }) => {
 
   const handleDelete = async (commentId, forumPostId) => {
     try {
-      await deleteCommentAction(commentId, forumPostId);
+      await deleteCommentAction(commentId, forumPostId, userId);
       toast.success('Comentário deletado!', { autoClose: 2000 });
+      onCommentDeleted(commentId);
     } catch (error) {
       toast.error(`Erro ao deletar comentário`, error.message);
     }
