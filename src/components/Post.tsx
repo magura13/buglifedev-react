@@ -90,10 +90,10 @@ const Post = ({ data, isLoggedIn }) => {
       {showComments &&
         comments.map((comment, index) => (
           <Comments
-            key={index}
             data={comment}
             onCommentDeleted={removeComment}
             forumPostId={data._id}
+            showComments={showComments}
           />
         ))}
       {isAuthenticated && (

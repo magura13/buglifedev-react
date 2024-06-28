@@ -3,8 +3,6 @@ import { storage } from '../utils/storage.ts';
 import {LikeData} from '../types/LikeData.ts'
 import apiInstance from './refreshTokenService.ts';
 
-const API_URL = 'https://api-typescript-express.onrender.com';
-
 
 export const createLike = async (
     LikeData:LikeData

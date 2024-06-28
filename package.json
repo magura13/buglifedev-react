@@ -12,6 +12,7 @@
     "autoprefixer": "^10.4.17",
     "axios": "^1.6.5",
     "dompurify": "^3.0.8",
+    "framer-motion": "^11.2.12",
     "postcss": "^8.4.33",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

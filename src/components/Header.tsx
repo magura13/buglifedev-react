@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import logo from '../assets/logo.png';
 import { useAuth } from '../contexts/authProvider.tsx';
+import HeaderMobile from './HeaderMobile.tsx';
+import HeaderDesktop from './HeaderDesktop.tsx';
+
 
 type HeaderProps = {
   onLoginClick: () => void;
@@ -15,9 +18,7 @@ const Header: React.FC<HeaderProps> = ({
   searchTerm,
   setSearchTerm,
 }) => {
-
   const { logout, isAuthenticated, checkIfIsAuthenticated } = useAuth();
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     checkIfIsAuthenticated();
@@ -25,11 +26,7 @@ const Header: React.FC<HeaderProps> = ({
 
   const handleLogout = () => {
     logout();
-  }
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  }
+  };
 
   return (
     <header className="bg-blue-500 text-white p-4 flex flex-col md:flex-row justify-between items-center">
@@ -50,32 +47,19 @@ const Header: React.FC<HeaderProps> = ({
             }}
           />
         </div>
-        <div className="md:hidden flex items-center">
-          <button className="text-white focus:outline-none" onClick={toggleMenu}>
-            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-            </svg>
-          </button>
-        </div>
       </div>
-      <nav className={`w-full md:w-auto ${menuOpen ? 'block' : 'hidden'} md:flex`}>
-        <ul className="flex flex-col md:flex-row items-center">
-          {!isAuthenticated ? (
-            <>
-              <li className="mt-2 md:mt-0 md:ml-6 cursor-pointer whitespace-nowrap" onClick={onLoginClick}>
-                Login
-              </li>
-              <li className="mt-2 md:mt-0 md:ml-6 cursor-pointer whitespace-nowrap" onClick={onSignUpClick}>
-                Cadastre-se
-              </li>
-            </>
-          ) : (
-            <li className="mt-2 md:mt-0 md:ml-6 cursor-pointer whitespace-nowrap" onClick={handleLogout}>
-              Logout
-            </li>
-          )}
-        </ul>
-      </nav>
+      <HeaderMobile
+        onLoginClick={onLoginClick}
+        onSignUpClick={onSignUpClick}
+        isAuthenticated={isAuthenticated}
+        handleLogout={handleLogout}
+      />
+      <HeaderDesktop
+        onLoginClick={onLoginClick}
+        onSignUpClick={onSignUpClick}
+        isAuthenticated={isAuthenticated}
+        handleLogout={handleLogout}
+      />
     </header>
   );
 };

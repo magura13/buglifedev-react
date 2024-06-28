@@ -10,6 +10,8 @@ const usePosts = (offset, limit) => {
     const loadAllPosts = async () => {
       try {
         const fetchedPosts = await getPosts(offset, limit);
+
+        const isArray = Array.isArray(fetchedPosts.forumPosts);
         
         if (Array.isArray(fetchedPosts.forumPosts)) {
           setPosts([...posts, ...fetchedPosts.forumPosts]);
@@ -22,7 +24,9 @@ const usePosts = (offset, limit) => {
         console.error('Erro ao buscar posts:', error);
       }
     };
+
     loadAllPosts();
+
   }, [offset, limit]);
 
   function addNewPost(newPost) {

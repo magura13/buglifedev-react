@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 export const apiInstance = axios.create({
-    baseURL: 'https://api-typescript-express.onrender.com',
+    // baseURL: 'https://api-typescript-express.onrender.com',
+    baseURL: "https://buglifedevbackend.azurewebsites.net",
+
     // baseURL: 'http://localhost:3001',
     withCredentials: true,
 });
