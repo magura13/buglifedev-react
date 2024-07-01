@@ -4,6 +4,9 @@ import useCreatePost from '../hooks/userCreatePost.tsx';
 import { toast } from 'react-toastify';
 import { ErrorFilter } from '../shared/errorfilter.ts';
 import useCreateImage from '../hooks/useCreateImage.tsx';
+import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFile, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 interface PostFormProps {
   addNewPost: (post: any) => void;
@@ -83,7 +86,13 @@ const PostForm: React.FC<PostFormProps> = ({ addNewPost }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 md:mx-32 lg:mx-32">
+    <motion.form 
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: 'auto' }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.3 }}
+      onSubmit={handleSubmit} 
+      className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 md:mx-32 lg:mx-32">
       <div className="mb-4">
         <input
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -109,10 +118,11 @@ const PostForm: React.FC<PostFormProps> = ({ addNewPost }) => {
         onDragOver={handleDrag}
         onDrop={handleDrop}
       >
-        <label htmlFor="imageUpload" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer">
-          Selecionar Arquivos
+        <label htmlFor="imageUpload" className="bg-blue-500 hover:bg-blue-700 text-white text-xxs font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer flex items-center">
+          <FontAwesomeIcon icon={faFile} className="mr-2" />
+          Selecionar
         </label>
-        <p className="mt-2 text-gray-600">ou arraste e solte os arquivos aqui</p>
+        <p className="mt-2 text-gray-600 text-xxs">Selecione ou arraste e solte os arquivos aqui</p>
         <input
           type="file"
           id="imageUpload"
@@ -132,14 +142,15 @@ const PostForm: React.FC<PostFormProps> = ({ addNewPost }) => {
       )}
       <div className="flex items-center justify-between mt-4">
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-blue-500 hover:bg-blue-700 text-xxs text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="submit"
           disabled={isLoading}
         >
-          Criar Post
+          <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
+          Postar
         </button>
       </div>
-    </form>
+    </motion.form>
   );
 };
 

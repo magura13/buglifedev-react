@@ -36,10 +36,10 @@ const Header: React.FC<HeaderProps> = ({
           alt="Logo BuglifeDev"
           className="h-10 w-10 md:h-14 md:w-14 rounded-full hover:scale-125 transition-transform duration-300"
         />
-        <div className="flex-grow mx-4 md:mt-0 flex justify-center">
+        <div className="flex-grow ml-4 md:mt-0 flex justify-center">
           <input
             type="search"
-            className="w-full px-4 py-2 rounded-lg md:w-2/3 lg:w-2/3 text-gray-700 focus:outline-none placeholder-grey justify-self-center"
+            className="w-full px-1 py-2 rounded-lg md:w-2/3 lg:w-2/3 text-gray-700 focus:outline-none placeholder-grey justify-self-center"
             placeholder="Faça sua pesquisa :)"
             value={searchTerm}
             onChange={(e) => {

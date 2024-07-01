@@ -11,6 +11,7 @@ import SignUpForm from './components/SignupForm.tsx';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './contexts/authProvider.tsx';
+import { AnimatePresence } from 'framer-motion';
 
 function App() {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -44,13 +45,21 @@ function App() {
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
           />
-          <Modal isOpen={isModalOpen} onClose={closeModal}>
-            {modalContent === 'login' ? (
-              <LoginForm onClose={closeModal} onLoginSuccess={handleLoginSuccess} />
-            ) : (
-              <SignUpForm onClose={closeModal} />
-            )}
-          </Modal>
+          <AnimatePresence>
+            <Modal isOpen={isModalOpen} onClose={closeModal}>
+              {modalContent === 'login' ? (
+                <LoginForm onClose={closeModal} onLoginSuccess={handleLoginSuccess} />
+              ) : (
+                <SignUpForm onClose={closeModal} />
+              )}
+            </Modal> <Modal isOpen={isModalOpen} onClose={closeModal}>
+              {modalContent === 'login' ? (
+                <LoginForm onClose={closeModal} onLoginSuccess={handleLoginSuccess} />
+              ) : (
+                <SignUpForm onClose={closeModal} />
+              )}
+            </Modal>
+          </AnimatePresence>
           <main>
             <Routes>
               <Route path="/" element={<HomePage searchTerm={searchTerm} isLogged={isLogged} />} />{' '}

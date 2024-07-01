@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
 
-const Comments = ({ data, forumPostId, onCommentDeleted, showComments }) => {
+const Comments = ({ data, forumPostId, onCommentDeleted }) => {
   const { deleteCommentAction, isLoading, error } = useDeleteComment();
   const userId = localStorage.getItem("userId");
   const isFromUser = userId === data.userId;
@@ -23,7 +23,8 @@ const Comments = ({ data, forumPostId, onCommentDeleted, showComments }) => {
   return (
     <motion.div
       initial={{ opacity: 0, height: 0 }}
-      animate={{ opacity: showComments ? 1 : 0, height: showComments ? 'auto' : 0 }}
+      animate={{ opacity: 1, height: 'auto' }}
+      exit={{ opacity: 0, height: 0 }}
       transition={{ duration: 0.3 }}
       className="overflow-hidden"
     >

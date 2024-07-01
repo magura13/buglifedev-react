@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceSmile, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -27,30 +27,36 @@ const HeaderMobile: React.FC<HeaderMobile> = ({ onLoginClick, onSignUpClick, isA
         </button>
       </div>
       <nav className="md:hidden lg:hidden">
-        <motion.ul
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: menuOpen ? 1 : 0, height: menuOpen ? 'auto' : 0 }}
-          transition={{ duration: 0.3 }}
-          className={`flex flex-col md:flex-row items-center ${menuOpen ? 'block' : 'hidden'}`}
-        >
-          {!isAuthenticated ? (
-            <>
-              <li className="mt-2 md:mt-0 md:ml-6 cursor-pointer whitespace-nowrap flex items-center" onClick={onLoginClick}>
-                <FontAwesomeIcon icon={faFaceSmile} className="mr-2" />
-                Login
-              </li>
-              <li className="mt-2 md:mt-0 md:ml-6 cursor-pointer whitespace-nowrap flex items-center" onClick={onSignUpClick}>
-                <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
-                Cadastre-se
-              </li>
-            </>
-          ) : (
-            <li className="mt-2 md:mt-0 md:ml-6 cursor-pointer whitespace-nowrap flex items-center" onClick={handleLogout}>
-              <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
-              Logout
-            </li>
-          )}
-        </motion.ul>
+        <AnimatePresence>
+          {menuOpen ? '' :
+            <motion.ul
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className={`flex flex-col md:flex-row items-center }`}
+            >
+              {!isAuthenticated ? (
+                <>
+                  <li className="mt-2 md:mt-0 md:ml-6 cursor-pointer whitespace-nowrap flex items-center" onClick={onLoginClick}>
+                    <FontAwesomeIcon icon={faFaceSmile} className="mr-2" />
+                    Login
+                  </li>
+                  <li className="mt-2 md:mt-0 md:ml-6 cursor-pointer whitespace-nowrap flex items-center" onClick={onSignUpClick}>
+                    <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
+                    Cadastre-se
+                  </li>
+                </>
+              ) : (
+                <li className="mt-2 md:mt-0 md:ml-6 cursor-pointer whitespace-nowrap flex items-center" onClick={handleLogout}>
+                  <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
+                  Logout
+                </li>
+              )}
+            </motion.ul>}
+
+        </AnimatePresence>
+
       </nav>
     </div>
 

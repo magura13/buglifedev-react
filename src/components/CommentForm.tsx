@@ -62,7 +62,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
         disabled={isLoading}
       >
         <FontAwesomeIcon icon={faComment} style={{color: "#ffffff"}} />
-        {isLoading ? 'Enviando' : 'Comentar'}
+        {isLoading ? '...' : 'Add'}
       </button>
     </form>
   );

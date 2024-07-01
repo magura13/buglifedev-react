@@ -7,6 +7,7 @@ import { LikeData } from '../types/LikeData.ts';
 import { toast } from 'react-toastify';
 import { ErrorFilter } from '../shared/errorfilter.ts';
 import { useAuth } from '../contexts/authProvider.tsx';
+import { AnimatePresence } from 'framer-motion';
 
 const Post = ({ data, isLoggedIn }) => {
   const formattedDate = formatDateTime(data.createdAt);
@@ -86,16 +87,18 @@ const Post = ({ data, isLoggedIn }) => {
           {comments.length} comentários
         </p>
       </div>
-
-      {showComments &&
-        comments.map((comment, index) => (
-          <Comments
-            data={comment}
-            onCommentDeleted={removeComment}
-            forumPostId={data._id}
-            showComments={showComments}
-          />
-        ))}
+      <div>
+        <AnimatePresence initial={false}>
+          {showComments &&
+            comments.map((comment, index) => (
+              <Comments
+                data={comment}
+                onCommentDeleted={removeComment}
+                forumPostId={data._id}
+              />
+            ))}
+        </AnimatePresence>
+      </div>
       {isAuthenticated && (
         <CommentForm
           postId={data._id}

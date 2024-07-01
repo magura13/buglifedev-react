@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React from 'react';
 
 type ModalProps = {
@@ -10,7 +11,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white rounded-lg shadow-xl p-4 sm:p-6 flex flex-col w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/4">
         <div className='flex justify-between items-center mb-4'>
           <div className='flex'>
@@ -27,7 +33,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         {children}
         <div className="flex justify-end mt-4"></div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

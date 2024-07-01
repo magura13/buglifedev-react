@@ -6,6 +6,7 @@ import usePosts from '../hooks/usePosts.tsx';
 import { useAuth } from '../contexts/authProvider.tsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { AnimatePresence } from 'framer-motion';
 
 interface HomePageProps {
   searchTerm: string;
@@ -39,7 +40,10 @@ const HomePage: React.FC<HomePageProps> = ({ searchTerm, isLogged }) => {
             <FontAwesomeIcon icon={showForm ? faMinus : faPlus} />
           </button>
         )}
-        {showForm && <div className ="md:hidden lg:hidden"><PostForm  addNewPost={addNewPost} /></div>}
+        <AnimatePresence initial={false}>
+          {showForm && <div className="md:hidden lg:hidden"><PostForm addNewPost={addNewPost} /></div>}
+        </AnimatePresence>
+
       </div>
       <div className="md:grid md:grid-cols-12 gap-4">
         <div className="col-span-2"></div>
