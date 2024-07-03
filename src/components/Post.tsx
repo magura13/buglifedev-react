@@ -7,16 +7,18 @@ import { LikeData } from '../types/LikeData.ts';
 import { toast } from 'react-toastify';
 import { ErrorFilter } from '../shared/errorfilter.ts';
 import { useAuth } from '../contexts/authProvider.tsx';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 const Post = ({ data, isLoggedIn }) => {
   const formattedDate = formatDateTime(data.createdAt);
   const [showComments, setShowComments] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
   const userName = localStorage.getItem('userName');
   const [userId, setUserId] = useState(localStorage.getItem('userId')?.toString());
   const [comments, setComments] = useState(data.comments);
-  const { sendLike, isLoading, error } = useCreateLike();
+  const [likes, setLikes] = useState(data.likes);
+  const { sendLike, sendDeleteLike } = useCreateLike();
   const { isAuthenticated } = useAuth();
 
   const addNewComment = (newComment) => {
@@ -27,20 +29,46 @@ const Post = ({ data, isLoggedIn }) => {
     setComments((prevComments) => prevComments.filter(comment => comment._id !== commentId));
   };
 
+  const addLike = (userId) => {
+    setLikes((prevLikes) => [...prevLikes, userId])
+  }
+
+  const removeLike = (userId) => {
+    setLikes((prevLikes) => prevLikes.filter(like => like !== userId))
+  }
+
+
+  const checkLiked = likes.filter(c => c == userId);
+
   const handleLike = async () => {
     try {
       if (!isAuthenticated) {
         toast.info('Necessário login');
         return;
       }
-      const forumPostId = data?._id;
-      const likeData: LikeData = { forumPostId, userId };
-      await sendLike(likeData);
-      toast.success('Post curtido :)', { autoClose: 1000 });
+      if (checkLiked.length === 0) {
+        const forumPostId = data?._id;
+        const likeData: LikeData = { forumPostId, userId };
+        await sendLike(likeData);
+        addLike(userId)
+        // toast.success('Post curtido :)', { autoClose: 1000 });
+      } else {
+        const forumPostId = data?._id;
+        const likeData: LikeData = { forumPostId, userId };
+        await sendDeleteLike(likeData)
+        removeLike(userId)
+      }
+
     } catch (err) {
       const filteredError = ErrorFilter.shapingResponse(err.response.status);
       toast.info(filteredError);
     }
+  };
+
+  const likeVariants = {
+    hidden: { scale: 0.8, opacity: 0 },
+    visible: { scale: 1.2, opacity: 1, transition: { duration: 0.2 } },
+    exit: { scale: 0.8, opacity: 0, transition: { duration: 0.2 } }
   };
 
   const handleCommentClick = () => {
@@ -79,7 +107,36 @@ const Post = ({ data, isLoggedIn }) => {
         {data.content?.message}
       </p>
 
-      <div className="flex justify-end my-2">
+      <div className="flex justify-between my-2">
+      <AnimatePresence initial={false} mode='wait'>
+          {checkLiked.length > 0 ? (
+            <motion.div
+              key="liked"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={likeVariants}
+              className='flex flex-row content-center cursor-pointer'
+              onClick={handleLike}
+            >
+              <FontAwesomeIcon icon={faHeart} style={{ color: "#0089ef" }} />
+              <p className='text-xs pl-1'>Liked</p>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="unliked"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={likeVariants}
+              className='flex flex-row content-center cursor-pointer'
+              onClick={handleLike}
+            >
+              <FontAwesomeIcon icon={faHeart} />
+              <p className='text-xs pl-1'>Like</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
         <p
           className="text-gray-700 text-xs md:text-sm mr-1 hover:underline hover:text-custom-blue cursor-pointer"
           onClick={handleCommentClick}
