@@ -3,10 +3,6 @@ import { storage } from '../utils/storage.ts';
 import apiInstance from './refreshTokenService.ts';
 
 
-const API_URL = 'https://api-typescript-express.onrender.com';
-
-// const API_URL ='https://buglifedevbackend.azurewebsites.net/';
-
 export const createPost = async (
   userId: string | null,
   userName: string | null,

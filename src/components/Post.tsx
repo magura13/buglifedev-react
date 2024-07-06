@@ -106,9 +106,9 @@ const Post = ({ data, isLoggedIn }) => {
       <p className="text-gray-700 text-xs mt-2 md:text-xs">
         {data.content?.message}
       </p>
-
       <div className="flex justify-between my-2">
-      <AnimatePresence initial={false} mode='wait'>
+      {isAuthenticated ? 
+        (<AnimatePresence initial={false} mode='wait'>
           {checkLiked.length > 0 ? (
             <motion.div
               key="liked"
@@ -136,7 +136,9 @@ const Post = ({ data, isLoggedIn }) => {
               <p className='text-xs pl-1'>Like</p>
             </motion.div>
           )}
-        </AnimatePresence>
+        </AnimatePresence>) 
+        : 
+        <></>}
         <p
           className="text-gray-700 text-xs md:text-sm mr-1 hover:underline hover:text-custom-blue cursor-pointer"
           onClick={handleCommentClick}
