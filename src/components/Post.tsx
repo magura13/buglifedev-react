@@ -138,7 +138,7 @@ const Post = ({ data, isLoggedIn }) => {
           )}
         </AnimatePresence>) 
         : 
-        <></>}
+        <div></div>}
         <p
           className="text-gray-700 text-xs md:text-sm mr-1 hover:underline hover:text-custom-blue cursor-pointer"
           onClick={handleCommentClick}
