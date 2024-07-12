@@ -1,7 +1,6 @@
 import { useState ,useContext} from 'react';
 import { login } from '../services/authService.ts';
 import { storage } from '../utils/storage.ts';
-import UserContext from '../contexts/authProvider.tsx';
 
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
