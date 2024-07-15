@@ -48,13 +48,20 @@ function App() {
           <AnimatePresence>
             <Modal isOpen={isModalOpen} onClose={closeModal}>
               {modalContent === 'login' ? (
-                <LoginForm onClose={closeModal} onLoginSuccess={handleLoginSuccess} />
+                <LoginForm
+                  onClose={closeModal}
+                  onLoginSuccess={handleLoginSuccess}
+                />
               ) : (
                 <SignUpForm onClose={closeModal} />
               )}
-            </Modal> <Modal isOpen={isModalOpen} onClose={closeModal}>
+            </Modal>{' '}
+            <Modal isOpen={isModalOpen} onClose={closeModal}>
               {modalContent === 'login' ? (
-                <LoginForm onClose={closeModal} onLoginSuccess={handleLoginSuccess} />
+                <LoginForm
+                  onClose={closeModal}
+                  onLoginSuccess={handleLoginSuccess}
+                />
               ) : (
                 <SignUpForm onClose={closeModal} />
               )}
@@ -62,7 +69,12 @@ function App() {
           </AnimatePresence>
           <main>
             <Routes>
-              <Route path="/" element={<HomePage searchTerm={searchTerm} isLogged={isLogged} />} />{' '}
+              <Route
+                path="/"
+                element={
+                  <HomePage searchTerm={searchTerm} isLogged={isLogged} />
+                }
+              />{' '}
             </Routes>
           </main>
           <Footer />

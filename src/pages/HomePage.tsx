@@ -41,9 +41,12 @@ const HomePage: React.FC<HomePageProps> = ({ searchTerm, isLogged }) => {
           </button>
         )}
         <AnimatePresence initial={false}>
-          {showForm && <div className="md:hidden lg:hidden"><PostForm addNewPost={addNewPost} /></div>}
+          {showForm && (
+            <div className="md:hidden lg:hidden">
+              <PostForm addNewPost={addNewPost} />
+            </div>
+          )}
         </AnimatePresence>
-
       </div>
       <div className="md:grid md:grid-cols-12 gap-4">
         <div className="col-span-2"></div>

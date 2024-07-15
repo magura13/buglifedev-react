@@ -8,7 +8,7 @@ const useCreateComment = () => {
   const sendComment = async (
     postId: string | null,
     userId: string | null | undefined,
-    userName: string | null ,
+    userName: string | null,
     message: string
   ) => {
     setIsLoading(true);
@@ -17,7 +17,7 @@ const useCreateComment = () => {
       const response = await createComment(postId, userId, userName, message);
       return response.addedComment.comment;
     } catch (err) {
-      throw err
+      throw err;
     } finally {
       setIsLoading(false);
     }

@@ -4,7 +4,6 @@ import { useAuth } from '../contexts/authProvider.tsx';
 import HeaderMobile from './HeaderMobile.tsx';
 import HeaderDesktop from './HeaderDesktop.tsx';
 
-
 type HeaderProps = {
   onLoginClick: () => void;
   onSignUpClick: () => void;

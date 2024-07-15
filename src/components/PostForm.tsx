@@ -6,7 +6,11 @@ import { ErrorFilter } from '../shared/errorfilter.ts';
 import useCreateImage from '../hooks/useCreateImage.tsx';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFile, faPaperPlane, faTimes } from '@fortawesome/free-solid-svg-icons';
+import {
+  faFile,
+  faPaperPlane,
+  faTimes,
+} from '@fortawesome/free-solid-svg-icons';
 
 interface PostFormProps {
   addNewPost: (post: any) => void;
@@ -43,9 +47,17 @@ const PostForm: React.FC<PostFormProps> = ({ addNewPost }) => {
         const url = urlResponse.data.signedUrl;
         const fileLink = urlResponse.data.fileLink;
         await sendImage(url, imgContent);
-        contentWithImage.images.push({ sort: 1, extension: type, path: fileLink });
+        contentWithImage.images.push({
+          sort: 1,
+          extension: type,
+          path: fileLink,
+        });
       }
-      const response = await sendPost(user.userId, user.userName, contentWithImage);
+      const response = await sendPost(
+        user.userId,
+        user.userName,
+        contentWithImage
+      );
       const newPost = response.response.forumPost;
       addNewPost(newPost);
       setDescription('');
@@ -69,7 +81,11 @@ const PostForm: React.FC<PostFormProps> = ({ addNewPost }) => {
   const handleDrag = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    if (event.type === 'dragenter' || event.type === 'dragleave' || event.type === 'dragover') {
+    if (
+      event.type === 'dragenter' ||
+      event.type === 'dragleave' ||
+      event.type === 'dragover'
+    ) {
       setDragActive(event.type === 'dragenter' || event.type === 'dragover');
     }
   };
@@ -82,7 +98,9 @@ const PostForm: React.FC<PostFormProps> = ({ addNewPost }) => {
       toast.error('Você só pode adicionar um arquivo por vez.');
       return;
     }
-    setImgContent(event.dataTransfer.files ? event.dataTransfer.files[0] : null);
+    setImgContent(
+      event.dataTransfer.files ? event.dataTransfer.files[0] : null
+    );
   };
 
   const handleRemoveFile = () => {
@@ -124,11 +142,17 @@ const PostForm: React.FC<PostFormProps> = ({ addNewPost }) => {
         onDragOver={handleDrag}
         onDrop={handleDrop}
       >
-        <label htmlFor="imageUpload" className="bg-blue-500 hover:bg-blue-700 text-white text-xxs font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer flex items-center">
+        <label
+          htmlFor="imageUpload"
+          className="bg-blue-500 hover:bg-blue-700 text-white text-xxs font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer flex items-center"
+        >
           <FontAwesomeIcon icon={faFile} className="mr-2" />
           Selecionar
         </label>
-        <p className="mt-2 text-gray-600 text-xxs">Selecione ou arraste e solte um arquivo aqui (Apenas um arquivo por post)</p>
+        <p className="mt-2 text-gray-600 text-xxs">
+          Selecione ou arraste e solte um arquivo aqui (Apenas um arquivo por
+          post)
+        </p>
         <input
           type="file"
           id="imageUpload"

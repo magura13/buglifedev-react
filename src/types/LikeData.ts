@@ -1,4 +1,4 @@
 export interface LikeData {
-    userId?:string,
-    forumPostId?:string
+  userId?: string;
+  forumPostId?: string;
 }

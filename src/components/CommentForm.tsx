@@ -6,7 +6,6 @@ import { useAuth } from '../contexts/authProvider.tsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 
-
 interface CommentFormProps {
   postId: string | null;
   userId: string | null | undefined;
@@ -36,7 +35,12 @@ const CommentForm: React.FC<CommentFormProps> = ({
       return;
     }
     try {
-      const newComment = await sendComment(postId, userId, userName, commentMessage);
+      const newComment = await sendComment(
+        postId,
+        userId,
+        userName,
+        commentMessage
+      );
       setCommentMessage('');
       toast.success('Comentário adicionado!', { autoClose: 1000 });
       onCommentAdded(newComment);
@@ -61,7 +65,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
         className="bg-blue-500 hover:bg-blue-700 text-xxxs text-white font-bold py-2 px-2 rounded-full h-12 w-12 flex items-center justify-center"
         disabled={isLoading}
       >
-        <FontAwesomeIcon icon={faComment} style={{color: "#ffffff"}} />
+        <FontAwesomeIcon icon={faComment} style={{ color: '#ffffff' }} />
         {isLoading ? '...' : 'Add'}
       </button>
     </form>

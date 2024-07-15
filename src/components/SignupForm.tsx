@@ -34,11 +34,8 @@ const SignUpForm = ({ onClose }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 ">
-      <div className='flex-col flex items-start'>
-        <label
-          htmlFor="userName"
-          className="block text-sm text-gray-700"
-        >
+      <div className="flex-col flex items-start">
+        <label htmlFor="userName" className="block text-sm text-gray-700">
           Nome de usuário
         </label>
         <input
@@ -52,11 +49,8 @@ const SignUpForm = ({ onClose }) => {
           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-0.5 text-sm"
         />
       </div>
-      <div className='flex-col flex items-start'>
-        <label
-          htmlFor="email"
-          className="block text-sm text-gray-700"
-        >
+      <div className="flex-col flex items-start">
+        <label htmlFor="email" className="block text-sm text-gray-700">
           E-mail
         </label>
         <input
@@ -70,11 +64,8 @@ const SignUpForm = ({ onClose }) => {
           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-0.5 text-sm"
         />
       </div>
-      <div className='flex-col flex items-start'>
-        <label
-          htmlFor="password"
-          className="block text-sm text-gray-700"
-        >
+      <div className="flex-col flex items-start">
+        <label htmlFor="password" className="block text-sm text-gray-700">
           Senha
         </label>
         <input

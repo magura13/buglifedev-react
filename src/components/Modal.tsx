@@ -16,12 +16,17 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.3 }}
-      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+    >
       <div className="bg-white rounded-lg shadow-xl p-4 sm:p-6 flex flex-col w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/4">
-        <div className='flex justify-between items-center mb-4'>
-          <div className='flex'>
-            <p className='text-xl sm:text-2xl text-custom-blue font-semibold'>BugLife</p>
-            <p className='text-xl sm:text-2xl text-custom-yellow font-semibold ml-1'>Dev</p>
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex">
+            <p className="text-xl sm:text-2xl text-custom-blue font-semibold">
+              BugLife
+            </p>
+            <p className="text-xl sm:text-2xl text-custom-yellow font-semibold ml-1">
+              Dev
+            </p>
           </div>
           <button
             onClick={onClose}

@@ -1,30 +1,24 @@
-import {LikeData} from '../types/LikeData.ts'
+import { LikeData } from '../types/LikeData.ts';
 import { useState } from 'react';
-import { createLike, deleteLike } from '../services/likeService.ts'
+import { createLike, deleteLike } from '../services/likeService.ts';
 
 const useCreateLike = () => {
-
-  const sendLike= async (
-    LikeData:LikeData
-  ) => {
-
+  const sendLike = async (LikeData: LikeData) => {
     try {
       const response = await createLike(LikeData);
-      return response
+      return response;
     } catch (err) {
-      throw err
-    } 
+      throw err;
+    }
   };
 
-  const sendDeleteLike= async (
-    LikeData:LikeData
-  ) => {
+  const sendDeleteLike = async (LikeData: LikeData) => {
     try {
       const response = await deleteLike(LikeData);
-      return response
+      return response;
     } catch (err) {
-      throw err
-    } 
+      throw err;
+    }
   };
 
   return { sendLike, sendDeleteLike };

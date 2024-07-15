@@ -4,8 +4,7 @@ import { LoginCredentials } from '../types/AuthData';
 import { UserCredentials, UserResponse } from '../types/UserData';
 import apiInstance from './refreshTokenService.ts';
 
-
-const API_URL = process.env.REACT_APP_API_URL
+const API_URL = process.env.REACT_APP_API_URL;
 
 interface LoginResponse {
   accessToken: string;
@@ -21,8 +20,8 @@ const login = async (credentials: LoginCredentials): Promise<LoginResponse> => {
   try {
     const response = await apiInstance.post(`/signin`, credentials);
     const { accessToken, userId, userName } = response.data;
-    const userData = { accessToken, userId, userName }
-    
+    const userData = { accessToken, userId, userName };
+
     return { accessToken, userId, userName };
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {

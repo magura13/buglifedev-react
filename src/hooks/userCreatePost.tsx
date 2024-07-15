@@ -9,9 +9,9 @@ const useCreatePost = () => {
     userName: string | null,
 
     content: {
-      title: string
-      message: string
-      images?: Array<{ sort: number, extension: string, path: string }>
+      title: string;
+      message: string;
+      images?: Array<{ sort: number; extension: string; path: string }>;
     }
   ) => {
     setIsLoading(true);
@@ -19,7 +19,7 @@ const useCreatePost = () => {
       const response = await createPost(userId, userName, content);
       return response;
     } catch (err) {
-      throw err
+      throw err;
     } finally {
       setIsLoading(false);
     }
@@ -28,5 +28,4 @@ const useCreatePost = () => {
   return { sendPost, isLoading };
 };
 
-export default useCreatePost
-  ;
+export default useCreatePost;

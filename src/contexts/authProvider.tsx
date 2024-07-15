@@ -1,11 +1,9 @@
 import React, { createContext, useContext, useState } from 'react';
 import { storage } from '../utils/storage.ts';
 
-
 export const AuthContext = createContext(null);
 
 export const useAuth = () => useContext(AuthContext);
-
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -31,11 +29,10 @@ export const AuthProvider = ({ children }) => {
       setUser({
         accessToken,
         userId,
-        userName
-      })
+        userName,
+      });
     }
-
-  }
+  };
 
   const logout = () => {
     setUser(null);
@@ -46,7 +43,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, checkIfIsAuthenticated, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, isAuthenticated, checkIfIsAuthenticated, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

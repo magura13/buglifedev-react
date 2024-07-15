@@ -1,11 +1,9 @@
-
 import { storage } from '../utils/storage.ts';
 import apiInstance from './refreshTokenService.ts';
 
-
 export const createComment = async (
   postId: string | null,
-  userId: string | null  | undefined,
+  userId: string | null | undefined,
   userName: string | null,
   message: string
 ): Promise<any> => {
@@ -21,7 +19,7 @@ export const createComment = async (
 export const deleteComment = async (
   commentId: string | null,
   forumPostId: string | null,
-  userId:string | null
+  userId: string | null
 ): Promise<any> => {
   const token = storage.getItem('accessToken');
   const response = await apiInstance.delete(

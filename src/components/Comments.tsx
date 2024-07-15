@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 
 const Comments = ({ data, forumPostId, onCommentDeleted }) => {
   const { deleteCommentAction, isLoading, error } = useDeleteComment();
-  const userId = localStorage.getItem("userId");
+  const userId = localStorage.getItem('userId');
   const isFromUser = userId === data.userId;
 
   const handleDelete = async (commentId, forumPostId) => {
@@ -30,7 +30,9 @@ const Comments = ({ data, forumPostId, onCommentDeleted }) => {
     >
       <div className="my-1 flex justify-between">
         <div>
-          <p className="text-gray-700 text-xxs font-semibold">{data.userName}:</p>
+          <p className="text-gray-700 text-xxs font-semibold">
+            {data.userName}:
+          </p>
           <p className="text-gray-700 text-xxs">{data.message}</p>
         </div>
         <div>

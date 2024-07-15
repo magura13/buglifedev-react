@@ -3,12 +3,11 @@ import useLogin from '../hooks/useLogin.tsx';
 import { toast } from 'react-toastify';
 import { useAuth } from '../contexts/authProvider.tsx';
 
-const LoginForm = ({ onClose ,onLoginSuccess}) => {
+const LoginForm = ({ onClose, onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { performLogin, loading, error } = useLogin();
-  const {login} = useAuth()
-
+  const { login } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -22,8 +21,8 @@ const LoginForm = ({ onClose ,onLoginSuccess}) => {
           },
           autoClose: 2000,
         });
-        login(result)
-        onLoginSuccess()
+        login(result);
+        onLoginSuccess();
       }
     } catch (error) {
       toast.error(error.message || 'Ocorreu um erro inesperado.', {
@@ -33,32 +32,31 @@ const LoginForm = ({ onClose ,onLoginSuccess}) => {
   };
 
   return (
-    <form onSubmit={handleSubmit } className="space-y-4  ">
-      <div className='flex-col flex items-start'>
-        <label 
-        htmlFor="email"
-        className="block text-sm text-gray-700"
-        >Email:</label>
+    <form onSubmit={handleSubmit} className="space-y-4  ">
+      <div className="flex-col flex items-start">
+        <label htmlFor="email" className="block text-sm text-gray-700">
+          Email:
+        </label>
         <input
           type="email"
           id="email"
           value={email}
           required
-          placeholder='Seu e-mail'
+          placeholder="Seu e-mail"
           onChange={(e) => setEmail(e.target.value)}
           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-0.5 text-sm"
         />
       </div>
-      <div className='flex-col flex items-start'>
-        <label 
-        htmlFor="email"
-        className="block text-sm text-gray-700">Senha:</label>
+      <div className="flex-col flex items-start">
+        <label htmlFor="email" className="block text-sm text-gray-700">
+          Senha:
+        </label>
         <input
           type="password"
           id="password"
           value={password}
           required
-          placeholder='Sua senha'
+          placeholder="Sua senha"
           onChange={(e) => setPassword(e.target.value)}
           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-0.5 text-sm"
         />

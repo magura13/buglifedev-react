@@ -15,7 +15,9 @@ const Post = ({ data, isLoggedIn }) => {
   const formattedDate = formatDateTime(data.createdAt);
   const [showComments, setShowComments] = useState(false);
   const userName = localStorage.getItem('userName');
-  const [userId, setUserId] = useState(localStorage.getItem('userId')?.toString());
+  const [userId, setUserId] = useState(
+    localStorage.getItem('userId')?.toString()
+  );
   const [comments, setComments] = useState(data.comments);
   const [likes, setLikes] = useState(data.likes);
   const { sendLike, sendDeleteLike } = useCreateLike();
@@ -26,19 +28,20 @@ const Post = ({ data, isLoggedIn }) => {
   };
 
   const removeComment = (commentId) => {
-    setComments((prevComments) => prevComments.filter(comment => comment._id !== commentId));
+    setComments((prevComments) =>
+      prevComments.filter((comment) => comment._id !== commentId)
+    );
   };
 
   const addLike = (userId) => {
-    setLikes((prevLikes) => [...prevLikes, userId])
-  }
+    setLikes((prevLikes) => [...prevLikes, userId]);
+  };
 
   const removeLike = (userId) => {
-    setLikes((prevLikes) => prevLikes.filter(like => like !== userId))
-  }
+    setLikes((prevLikes) => prevLikes.filter((like) => like !== userId));
+  };
 
-
-  const checkLiked = likes.filter(c => c == userId);
+  const checkLiked = likes.filter((c) => c == userId);
 
   const handleLike = async () => {
     try {
@@ -50,15 +53,13 @@ const Post = ({ data, isLoggedIn }) => {
         const forumPostId = data?._id;
         const likeData: LikeData = { forumPostId, userId };
         await sendLike(likeData);
-        addLike(userId)
-        // toast.success('Post curtido :)', { autoClose: 1000 });
+        addLike(userId);
       } else {
         const forumPostId = data?._id;
         const likeData: LikeData = { forumPostId, userId };
-        await sendDeleteLike(likeData)
-        removeLike(userId)
+        await sendDeleteLike(likeData);
+        removeLike(userId);
       }
-
     } catch (err) {
       const filteredError = ErrorFilter.shapingResponse(err.response.status);
       toast.info(filteredError);
@@ -68,7 +69,7 @@ const Post = ({ data, isLoggedIn }) => {
   const likeVariants = {
     hidden: { scale: 0.8, opacity: 0 },
     visible: { scale: 1.2, opacity: 1, transition: { duration: 0.2 } },
-    exit: { scale: 0.8, opacity: 0, transition: { duration: 0.2 } }
+    exit: { scale: 0.8, opacity: 0, transition: { duration: 0.2 } },
   };
 
   const handleCommentClick = () => {
@@ -79,13 +80,17 @@ const Post = ({ data, isLoggedIn }) => {
     <div className="rounded overflow-hidden shadow-lg p-4 mb-6 flex flex-col">
       <div className="flex flex-row items-start md:items-center mb-2 md:mb-0 justify-between">
         <div className="flex flex-row">
-          <p className="text-gray-700 text-xxs mr-1 whitespace-nowrap">Criado por:</p>
+          <p className="text-gray-700 text-xxs mr-1 whitespace-nowrap">
+            Criado por:
+          </p>
           <p className="text-custom-blue text-xs text-xxs font-semibold mr-1 whitespace-nowrap">
             {data.userName}
           </p>
         </div>
         <div className="flex flex-row">
-          <p className="text-gray-700 text-xxs mr-1 whitespace-nowrap">Postado em</p>
+          <p className="text-gray-700 text-xxs mr-1 whitespace-nowrap">
+            Postado em
+          </p>
           <p className="text-custom-blue text-xxs font-semibold whitespace-nowrap">
             {formattedDate}
           </p>
@@ -107,6 +112,7 @@ const Post = ({ data, isLoggedIn }) => {
         {data.content?.message}
       </p>
       <div className="flex justify-between my-2">
+        {/*
       {isAuthenticated ? 
         (<AnimatePresence initial={false} mode='wait'>
           {checkLiked.length > 0 ? (
@@ -139,6 +145,7 @@ const Post = ({ data, isLoggedIn }) => {
         </AnimatePresence>) 
         : 
         <div></div>}
+        */}
         <p
           className="text-gray-700 text-xs md:text-sm mr-1 hover:underline hover:text-custom-blue cursor-pointer"
           onClick={handleCommentClick}
