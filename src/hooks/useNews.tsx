@@ -17,7 +17,9 @@ const useNews = (limit: number) => {
     const fetchNews = async () => {
       try {
         const newsData = await getNews();
-        setNews(newsData.slice(0, limit));
+        const shuffledNews = newsData.sort(() => 0.5 - Math.random());
+        const selectedNews = shuffledNews.slice(0, limit);
+        setNews(selectedNews);
       } catch (error) {
         console.error('Erro ao buscar notícias:', error);
       } finally {
