@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'https://buglifedevbackend.azurewebsites.net/news';
+// const API_URL = 'https://buglifedevbackend.azurewebsites.net/news';
+const API_URL ='https://api-typescript-express.onrender.com/news';
 
 export const getNews = async () => {
   try {
